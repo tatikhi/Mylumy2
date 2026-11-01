@@ -1,0 +1,3198 @@
+<!DOCTYPE html>
+<html lang="ru" data-theme="sunlit" data-font-size="normal">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=3.0, user-scalable=yes">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+
+    <!-- Мгновенная установка темы и размера шрифта ДО парсинга CSS -->
+    <script>
+        (function() {
+            try {
+                var oldThemes = ['nude', 'mint', 'lavender', 'sage'];
+                var savedTheme = localStorage.getItem('cb_theme');
+                if (!savedTheme || oldThemes.indexOf(savedTheme) !== -1) {
+                    savedTheme = (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) ? 'midnight' : 'sunlit';
+                    localStorage.setItem('cb_theme', savedTheme);
+                }
+                document.documentElement.setAttribute('data-theme', savedTheme);
+
+                var savedFontSize = localStorage.getItem('cb_font_size') || 'normal';
+                document.documentElement.setAttribute('data-font-size', savedFontSize);
+            } catch(e) {}
+        })();
+    </script>
+
+    <title>MyLumy</title>
+    
+    <!-- Yandex.Metrika counter -->
+    <script type="text/javascript">
+        (function(m,e,t,r,i,k,a){
+            m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+            m[i].l=1*new Date();
+            for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+            k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)
+        })(window, document,'script','https://mc.yandex.ru/metrika/tag.js?id=113811190', 'ym');
+
+        try {
+            ym(113811190, 'init', {ssr:true, webvisor:true, clickmap:true, ecommerce:"dataLayer", referrer: document.referrer, url: location.href, accurateTrackBounce:true, trackLinks:true});
+        } catch(e) {}
+    </script>
+
+    <!-- Telegram WebApp SDK -->
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+
+    <!-- Шрифт бренда Alice -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Alice&display=swap" rel="stylesheet">
+
+    <!-- HTML5 QrCode Scanner Library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html5-qrcode/2.3.8/html5-qrcode.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    
+    <style>
+        :root {
+            --font-scale: 1;
+            --radius-sm: 10px;
+            --radius-md: 18px;
+            --radius-lg: 24px;
+            --shadow-soft: 0 4px 20px rgba(0, 0, 0, 0.04);
+            --shadow-elevated: 0 16px 40px rgba(0, 0, 0, 0.12);
+        }
+
+        html[data-font-size="large"] {
+            --font-scale: 1.12;
+        }
+
+        /* 1. Sunlit Gloss */
+        :root, [data-theme="sunlit"] {
+            --bg-main: #FFF5F0;
+            --surface: #FFFFFF;
+            --text-primary: #331B14;
+            --text-secondary: #704C42;
+            --accent-main: #E87A5D;
+            --accent-grad: #C95B3E;
+            --accent-light: #FDE6DD;
+            --border-color: rgba(232, 122, 93, 0.22);
+            --shadow-soft: 0 8px 24px rgba(232, 122, 93, 0.08);
+            --icon-inactive: #C7A69C;
+            --item-bg: rgba(255, 255, 255, 0.95);
+        }
+
+        /* 2. Berry Velvet */
+        [data-theme="berry"] {
+            --bg-main: #1D161E;
+            --surface: #2A202C;
+            --text-primary: #F7EBF0;
+            --text-secondary: #B39DA8;
+            --accent-main: #D96B94;
+            --accent-grad: #B84D75;
+            --accent-light: #3D2938;
+            --border-color: rgba(217, 107, 148, 0.25);
+            --shadow-soft: 0 8px 24px rgba(0, 0, 0, 0.3);
+            --icon-inactive: #6B5263;
+            --item-bg: rgba(42, 32, 44, 0.85);
+        }
+
+        /* 3. Ice Derm */
+        [data-theme="icederm"] {
+            --bg-main: #F0F6FA;
+            --surface: #FFFFFF;
+            --text-primary: #122836;
+            --text-secondary: #425F73;
+            --accent-main: #2B78A3;
+            --accent-grad: #1C5A7D;
+            --accent-light: #DCECF5;
+            --border-color: rgba(43, 120, 163, 0.22);
+            --shadow-soft: 0 8px 24px rgba(43, 120, 163, 0.08);
+            --icon-inactive: #90AEC2;
+            --item-bg: rgba(255, 255, 255, 0.95);
+        }
+
+        /* 4. Espresso & Oat */
+        [data-theme="espresso"] {
+            --bg-main: #F8F4EE;
+            --surface: #FFFFFF;
+            --text-primary: #2B211A;
+            --text-secondary: #5C4C40;
+            --accent-main: #6F4E37;
+            --accent-grad: #523825;
+            --accent-light: #ECE1D7;
+            --border-color: rgba(111, 78, 55, 0.22);
+            --shadow-soft: 0 8px 24px rgba(111, 78, 55, 0.08);
+            --icon-inactive: #AFA093;
+            --item-bg: rgba(255, 255, 255, 0.95);
+        }
+
+        /* 5. Cyber Glow */
+        [data-theme="cyberglow"] {
+            --bg-main: #F5F0FE;
+            --surface: #FFFFFF;
+            --text-primary: #1F1135;
+            --text-secondary: #523D70;
+            --accent-main: #8A5CF5;
+            --accent-grad: #6E3BD9;
+            --accent-light: #EBE1FF;
+            --border-color: rgba(138, 92, 245, 0.22);
+            --shadow-soft: 0 8px 24px rgba(138, 92, 245, 0.08);
+            --icon-inactive: #A692CD;
+            --item-bg: rgba(255, 255, 255, 0.95);
+        }
+
+        /* 6. Midnight Calm */
+        [data-theme="midnight"] {
+            --bg-main: #0F141C;
+            --surface: #161D2B;
+            --text-primary: #F0F5FF;
+            --text-secondary: #8E9EB8;
+            --accent-main: #4E9EFF;
+            --accent-grad: #2B7AE6;
+            --accent-light: #1A2E4A;
+            --border-color: rgba(78, 158, 255, 0.22);
+            --shadow-soft: 0 8px 24px rgba(0, 0, 0, 0.4);
+            --icon-inactive: #4B5E7D;
+            --item-bg: rgba(22, 29, 43, 0.85);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            touch-action: manipulation;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        /* Принудительно разрешаем выделение текста и контекстное меню */
+        body, p, span, div, label, 
+        .item-name, .item-tag, .toast-notification, 
+        .version-text, #smartPresetText, .item-details {
+            -webkit-user-select: text !important;
+            user-select: text !important;
+            -webkit-touch-callout: default !important;
+        }
+
+        /* Блокируем выделение строго для интерактивных кнопок */
+        button, input[type="button"], .picker-btn, .day-chip, 
+        .pao-chip, .toggle-switch, .tod-btn, .date-chip, 
+        .cal-day-cell, .svg-icon, .category-header-btn, .manage-item, .icon-btn {
+            -webkit-user-select: none !important;
+            user-select: none !important;
+            -webkit-touch-callout: none !important;
+        }
+
+        body.theme-animated * {
+            transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        input, textarea, select {
+            caret-color: var(--accent-main);
+            -webkit-user-select: text;
+            user-select: text;
+        }
+
+        body {
+            background-color: var(--bg-main);
+            color: var(--text-primary);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 16px 14px 40px;
+            font-size: calc(15px * var(--font-scale));
+        }
+
+        body.modal-open { overflow: hidden; }
+
+        .svg-icon {
+            display: inline-block;
+            width: 18px;
+            height: 18px;
+            min-width: 18px;
+            min-height: 18px;
+            stroke: currentColor;
+            fill: none;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            vertical-align: middle;
+            flex-shrink: 0;
+        }
+
+        /* Шапка приложения */
+        .header-bar {
+            width: 100%;
+            max-width: 480px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+
+        .brand-font, .uniform-brand-title, .form-section-title, .modal-title, .cal-month-title {
+            font-family: 'Alice', Georgia, serif;
+            font-weight: 400;
+            letter-spacing: 0.025em;
+        }
+
+        .uniform-brand-title {
+            font-size: calc(clamp(20px, 5.5vw, 24px) * var(--font-scale));
+            color: var(--text-primary);
+            line-height: 1.25;
+        }
+
+        .logo {
+            font-family: 'Alice', Georgia, serif;
+            font-size: calc(clamp(25px, 6.5vw, 29px) * var(--font-scale));
+            font-weight: 400;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            color: var(--text-primary);
+        }
+
+        .icon-btn {
+            background: var(--surface);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: var(--shadow-soft);
+            transition: transform 0.15s ease, background-color 0.2s ease;
+        }
+
+        .icon-btn:active {
+            transform: scale(0.92);
+            background: var(--accent-light);
+        }
+
+        .app-container {
+            width: 100%;
+            max-width: 480px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .date-chip {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--surface);
+            color: var(--text-primary);
+            border: 1px solid var(--border-color);
+            padding: 10px 18px;
+            border-radius: 20px;
+            font-size: calc(clamp(14px, 3.8vw, 16px) * var(--font-scale));
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: var(--shadow-soft);
+            transition: transform 0.15s ease, background-color 0.2s ease;
+            margin-bottom: 16px;
+        }
+
+        .date-chip:active {
+            transform: scale(0.96);
+            background: var(--accent-light);
+        }
+
+        .main-card {
+            background: var(--surface);
+            border-radius: var(--radius-lg);
+            width: 100%;
+            padding: 20px 16px;
+            box-shadow: var(--shadow-soft);
+            border: 1px solid var(--border-color);
+        }
+
+        /* iOS Segmented Control */
+        .tod-switch {
+            display: flex;
+            background: rgba(0, 0, 0, 0.05);
+            border-radius: 14px;
+            padding: 3px;
+            margin-bottom: 20px;
+            gap: 4px;
+            border: none;
+        }
+
+        [data-theme="midnight"] .tod-switch,
+        [data-theme="berry"] .tod-switch {
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        .tod-btn {
+            flex: 1;
+            padding: 9px 12px;
+            text-align: center;
+            border-radius: 11px;
+            border: none;
+            background: transparent;
+            color: var(--text-secondary);
+            font-size: calc(clamp(15px, 4.2vw, 17px) * var(--font-scale));
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+
+        .tod-btn.active {
+            background: var(--surface);
+            color: var(--text-primary);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+
+        .routine-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .btn-main-action {
+            width: 100%;
+            padding: 14px 18px;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border-color);
+            background: var(--surface);
+            box-shadow: var(--shadow-soft);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: transform 0.15s ease, background-color 0.2s ease;
+            white-space: nowrap;
+        }
+
+        .btn-main-action:active {
+            transform: scale(0.98);
+            background: var(--accent-light);
+        }
+
+        .pro-badge {
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--accent-main);
+            background: var(--accent-light);
+            border: 1px solid var(--accent-main);
+            padding: 2px 7px;
+            border-radius: 8px;
+            margin-left: 8px;
+            letter-spacing: 0.04em;
+            display: inline-block;
+            line-height: 1.2;
+        }
+
+        .routine-item {
+            background: var(--item-bg);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            padding: 14px 15px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.02);
+        }
+
+        .routine-item-main {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+            gap: 8px;
+        }
+
+        .item-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            min-width: 0;
+            flex: 1;
+        }
+
+        .item-num {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: var(--accent-light);
+            color: var(--accent-main);
+            font-size: calc(13.5px * var(--font-scale));
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .item-details {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            min-width: 0;
+            flex: 1;
+        }
+
+        .item-name {
+            font-size: calc(clamp(15px, 4.2vw, 17px) * var(--font-scale));
+            font-weight: 600;
+            color: var(--text-primary);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .item-tag {
+            font-size: calc(12.5px * var(--font-scale));
+            color: var(--text-secondary);
+            font-weight: 500;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .item-week-step {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            font-size: calc(12px * var(--font-scale));
+            font-weight: 600;
+            color: var(--accent-main);
+            background: var(--accent-light);
+            padding: 3px 8px;
+            border-radius: 8px;
+            width: fit-content;
+            margin-top: 3px;
+        }
+
+        .pause-step-container {
+            display: flex;
+            justify-content: center;
+            margin: 4px 0;
+            width: 100%;
+        }
+
+        .btn-pause-timer {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 7px;
+            background: var(--surface);
+            border: 1.5px solid var(--accent-main);
+            color: var(--accent-main);
+            padding: 8px 18px;
+            border-radius: 20px;
+            font-size: calc(13.5px * var(--font-scale));
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+            transition: transform 0.15s ease, background-color 0.2s ease;
+        }
+
+        .btn-pause-timer:active:not(.running):not(.completed) {
+            transform: scale(0.96);
+            background: var(--accent-light);
+        }
+
+        .btn-pause-timer.running {
+            background: var(--accent-main);
+            color: #FFFFFF;
+            border-color: var(--accent-main);
+            pointer-events: none;
+        }
+
+        .btn-pause-timer.running .svg-icon { stroke: #FFFFFF; }
+
+        .btn-pause-timer.completed {
+            background: var(--accent-light);
+            color: var(--accent-main);
+            border-color: var(--accent-main);
+            pointer-events: none;
+        }
+
+        .expiry-dots {
+            display: flex;
+            gap: 4px;
+            align-items: center;
+            flex-shrink: 0;
+            padding: 3px;
+        }
+
+        .dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+        }
+
+        .dot-green { background-color: #2ECC71; }
+        .dot-orange { background-color: #F39C12; }
+        .dot-red { background-color: #E74C3C; }
+        .dot-gray { background-color: var(--icon-inactive); }
+
+        .routine-filter-switch {
+            display: flex;
+            background: rgba(0, 0, 0, 0.05);
+            border-radius: 14px;
+            padding: 3px;
+            margin-bottom: 12px;
+            gap: 4px;
+        }
+
+        .filter-tab-btn {
+            flex: 1;
+            padding: 8px 6px;
+            text-align: center;
+            border-radius: 11px;
+            cursor: pointer;
+            color: var(--text-secondary);
+            border: none;
+            background: transparent;
+            font-size: calc(13.5px * var(--font-scale));
+            font-weight: 600;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+
+        .filter-tab-btn.active {
+            background: var(--surface);
+            color: var(--text-primary);
+            box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+        }
+
+        .toggle-switch {
+            position: relative;
+            display: inline-block;
+            width: 46px;
+            height: 26px;
+            flex-shrink: 0;
+        }
+
+        .toggle-switch input { opacity: 0; width: 0; height: 0; }
+
+        .toggle-slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-color: var(--border-color);
+            transition: .25s ease;
+            border-radius: 26px;
+        }
+
+        .toggle-slider:before {
+            position: absolute;
+            content: "";
+            height: 20px;
+            width: 20px;
+            left: 3px;
+            bottom: 3px;
+            background-color: var(--surface);
+            transition: .25s ease;
+            border-radius: 50%;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+        }
+
+        input:checked + .toggle-slider {
+            background-color: var(--accent-main);
+        }
+
+        input:checked + .toggle-slider:before {
+            transform: translateX(20px);
+        }
+
+        /* Bottom Sheet Modal Windows */
+        .modal-overlay {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(4px);
+            display: none;
+            justify-content: center;
+            align-items: flex-end; /* Bottom sheet alignment */
+            z-index: 1000;
+            overflow-y: auto;
+            overscroll-behavior: contain;
+            opacity: 0;
+            transition: opacity 0.25s ease;
+        }
+
+        .modal-overlay.active-modal {
+            display: flex;
+            opacity: 1;
+        }
+
+        .modal-card {
+            background: var(--surface);
+            border-radius: 24px 24px 0 0; /* Bottom Sheet top radius */
+            width: 100%;
+            max-width: 480px;
+            max-height: 88vh;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            padding: 12px 18px 24px;
+            box-shadow: var(--shadow-elevated);
+            border: 1px solid var(--border-color);
+            border-bottom: none;
+            position: relative;
+            transform: translateY(100%);
+            transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .modal-overlay.active-modal .modal-card {
+            transform: translateY(0);
+        }
+
+        .sheet-handle {
+            width: 36px;
+            height: 5px;
+            background: rgba(0, 0, 0, 0.15);
+            border-radius: 3px;
+            margin: 0 auto 14px;
+            flex-shrink: 0;
+        }
+
+        [data-theme="midnight"] .sheet-handle,
+        [data-theme="berry"] .sheet-handle {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .modal-body-scrollable {
+            flex: 1;
+            overflow-y: auto;
+            overscroll-behavior: contain;
+            -webkit-overflow-scrolling: touch;
+            padding-right: 2px;
+        }
+
+        .form-section {
+            background: var(--bg-main);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            padding: 14px;
+            margin-bottom: 12px;
+        }
+
+        .form-section-title {
+            font-size: calc(clamp(17px, 4.5vw, 20px) * var(--font-scale));
+            color: var(--accent-main);
+            margin-bottom: 10px;
+        }
+
+        .version-row { display: flex; flex-direction: column; gap: 8px; align-items: center; text-align: center; }
+        .version-text { font-size: calc(15px * var(--font-scale)); color: var(--text-secondary); text-align: center; width: 100%; }
+
+        .btn-update-inline,
+        .btn-secondary.small-font {
+            background: var(--surface);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            padding: 11px;
+            border-radius: var(--radius-sm);
+            width: 100%;
+            font-size: calc(14.5px * var(--font-scale)) !important;
+            font-weight: 500;
+            cursor: pointer;
+            transition: transform 0.15s ease;
+        }
+
+        .btn-update-inline:active,
+        .btn-secondary.small-font:active {
+            transform: scale(0.98);
+            background: var(--accent-light);
+        }
+
+        .form-group { margin-bottom: 12px; position: relative; }
+        .form-group:last-child { margin-bottom: 0; }
+        .form-group label {
+            display: block;
+            font-size: calc(13.5px * var(--font-scale));
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 6px;
+        }
+
+        .input-with-icon-wrapper { position: relative; display: flex; align-items: center; }
+
+        .input-control {
+            width: 100%;
+            padding: 11px 13px;
+            border-radius: var(--radius-sm);
+            border: 1px solid var(--border-color);
+            background: var(--surface);
+            color: var(--text-primary);
+            font-size: calc(15px * var(--font-scale));
+            font-weight: 500;
+            outline: none;
+        }
+
+        .input-control-with-btn { padding-right: 42px; }
+
+        .btn-inline-scan {
+            position: absolute;
+            right: 5px;
+            background: var(--accent-light);
+            border: 1px solid var(--border-color);
+            color: var(--accent-main);
+            border-radius: 8px;
+            padding: 6px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .btn-inline-scan:active { transform: scale(0.94); }
+
+        .autocomplete-dropdown {
+            position: absolute;
+            top: 100%; left: 0; right: 0;
+            background: var(--surface);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-sm);
+            margin-top: 4px;
+            max-height: 160px;
+            opacity: 0;
+            overflow-y: auto;
+            z-index: 100;
+            box-shadow: var(--shadow-elevated);
+            display: none;
+            transition: opacity 0.2s ease;
+        }
+
+        .autocomplete-dropdown.open {
+            display: block;
+            opacity: 1;
+        }
+
+        .autocomplete-item {
+            padding: 10px 13px;
+            font-size: calc(14px * var(--font-scale));
+            color: var(--text-primary);
+            cursor: pointer;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .autocomplete-item:last-child { border-bottom: none; }
+        .autocomplete-item:active { background: var(--accent-light); }
+
+        .picker-group { display: flex; gap: 5px; }
+
+        .picker-btn {
+            flex: 1;
+            padding: 8px 6px;
+            border-radius: var(--radius-sm);
+            border: 1px solid var(--border-color);
+            background: var(--surface);
+            font-size: calc(12.5px * var(--font-scale));
+            font-weight: 600;
+            cursor: pointer;
+            color: var(--text-secondary);
+            text-align: center;
+            transition: all 0.2s;
+            min-height: 38px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .picker-btn.active {
+            background: var(--accent-main);
+            color: #FFF;
+            border-color: var(--accent-main);
+            box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+        }
+
+        #themeRow .picker-btn { height: 38px; }
+        #themeRow .picker-btn.active { box-shadow: 0 0 0 2px var(--surface), 0 0 0 4px var(--accent-main); }
+
+        .type-picker-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 6px; }
+        .days-picker { display: flex; gap: 4px; width: 100%; margin-top: 6px; }
+
+        .day-chip {
+            flex: 1;
+            padding: 8px 0;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            background: var(--surface);
+            font-size: calc(13px * var(--font-scale));
+            font-weight: 600;
+            cursor: pointer;
+            color: var(--text-secondary);
+            text-align: center;
+        }
+
+        .day-chip.active { background: var(--accent-main); color: #FFF; border-color: var(--accent-main); }
+
+        .pao-highlight-box {
+            background: var(--accent-light);
+            border: 1px solid var(--accent-main);
+            border-radius: var(--radius-md);
+            padding: 12px;
+            margin-bottom: 10px;
+        }
+
+        .pao-title {
+            font-size: calc(13.5px * var(--font-scale));
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 6px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .pao-picker { display: flex; gap: 5px; }
+
+        .pao-chip {
+            flex: 1;
+            padding: 8px 5px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            background: var(--surface);
+            font-size: calc(13px * var(--font-scale));
+            font-weight: 600;
+            cursor: pointer;
+            color: var(--text-secondary);
+            text-align: center;
+        }
+
+        .pao-chip.active { background: var(--accent-main); color: #FFF; border-color: var(--accent-main); }
+
+        .btn-secondary {
+            width: 100%;
+            padding: 12px;
+            border-radius: var(--radius-sm);
+            border: 1px solid var(--border-color);
+            background: var(--surface);
+            color: var(--text-primary);
+            font-size: calc(clamp(15px, 4vw, 17px) * var(--font-scale));
+            cursor: pointer;
+            transition: transform 0.15s ease;
+            white-space: nowrap;
+        }
+
+        .btn-secondary:active { transform: scale(0.98); background: var(--bg-main); }
+
+        .btn-action {
+            width: 100%;
+            padding: 13px 18px;
+            border-radius: var(--radius-sm);
+            border: 1px solid var(--accent-main);
+            background: var(--accent-main);
+            color: #FFFFFF;
+            font-size: calc(clamp(15.5px, 4.2vw, 17.5px) * var(--font-scale));
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.15s ease;
+            white-space: nowrap;
+        }
+
+        .btn-action:active { transform: scale(0.98); }
+
+        .btn-add-toggle {
+            width: 100%;
+            padding: 12px;
+            border-radius: var(--radius-sm);
+            border: 1px dashed var(--accent-main);
+            background: var(--accent-light);
+            color: var(--accent-main);
+            font-size: calc(clamp(15px, 4vw, 17px) * var(--font-scale));
+            font-weight: 600;
+            cursor: pointer;
+            margin-bottom: 8px;
+        }
+
+        .product-manage-list { display: flex; flex-direction: column; gap: 8px; margin-bottom: 10px; }
+        .category-group-block { display: flex; flex-direction: column; gap: 4px; margin-bottom: 4px; }
+
+        .category-header-btn {
+            width: 100%;
+            padding: 12px 14px;
+            border-radius: var(--radius-sm);
+            background: var(--bg-main);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            font-size: calc(clamp(15.5px, 4.2vw, 17.5px) * var(--font-scale));
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            gap: 8px;
+        }
+
+        .category-header-btn:active, .category-header-btn.open { background: var(--accent-light); border-color: var(--accent-main); }
+        .category-title-text {
+            font-family: 'Alice', Georgia, serif;
+            font-size: calc(clamp(15.5px, 4.2vw, 18px) * var(--font-scale));
+            flex: 1;
+            text-align: left;
+        }
+
+        .category-chevron {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-secondary);
+            transition: transform 0.25s ease;
+        }
+
+        .category-header-btn.open .category-chevron { transform: rotate(180deg); }
+
+        .category-items-container {
+            display: grid;
+            grid-template-rows: 0fr;
+            opacity: 0;
+            transition: grid-template-rows 0.3s ease, opacity 0.25s ease;
+        }
+
+        .category-items-container.open {
+            grid-template-rows: 1fr;
+            opacity: 1;
+        }
+
+        .category-items-inner {
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .manage-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 12px;
+            border-radius: 12px;
+            background: var(--surface);
+            font-size: calc(14.5px * var(--font-scale));
+            font-weight: 600;
+            border: 1px solid var(--border-color);
+            cursor: pointer;
+            gap: 8px;
+        }
+
+        .manage-item:active { transform: scale(0.98); background: var(--accent-light); }
+        .manage-info { display: flex; align-items: center; gap: 8px; min-width: 0; flex: 1; }
+        .manage-info span { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+        .accordion-toggle-btn {
+            width: 100%;
+            padding: 12px 14px;
+            border-radius: var(--radius-sm);
+            border: 1px solid var(--accent-main);
+            background: transparent;
+            color: var(--text-primary);
+            font-size: calc(14.5px * var(--font-scale));
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .accordion-content { display: none; padding-top: 10px; }
+        .accordion-content.open { display: block; }
+
+        #productFormContainer { display: none; }
+        #productFormContainer.open { display: block; }
+
+        .toast-notification {
+            position: fixed;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%) scale(0.9);
+            width: 88%;
+            max-width: 340px;
+            background: var(--surface);
+            border: 1px solid var(--accent-main);
+            color: var(--text-primary);
+            padding: 14px 16px;
+            border-radius: 20px;
+            font-size: calc(14px * var(--font-scale));
+            box-shadow: var(--shadow-elevated);
+            opacity: 0;
+            pointer-events: none;
+            transition: all 0.25s ease;
+            z-index: 10000;
+            text-align: center;
+        }
+
+        .toast-notification.visible { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+
+        .cal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 14px;
+        }
+
+        .cal-nav-btn {
+            background: var(--bg-main);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            width: 32px; height: 32px;
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            cursor: pointer;
+        }
+
+        .cal-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 5px;
+            text-align: center;
+        }
+
+        .cal-day-name { font-size: 12px; font-weight: 600; color: var(--text-secondary); padding-bottom: 4px; }
+
+        .cal-day-cell {
+            aspect-ratio: 1;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 13.5px;
+            border-radius: 50%;
+            cursor: pointer;
+            color: var(--text-primary);
+        }
+
+        .cal-day-cell.selected { background: var(--accent-main); color: #FFFFFF; font-weight: 700; }
+        .cal-day-cell.archive-day { opacity: 0.65; }
+        .cal-day-cell.future-day { opacity: 0.75; }
+        .cal-day-cell.disabled { opacity: 0.3 !important; text-decoration: line-through; cursor: not-allowed; pointer-events: none; }
+    </style>
+</head>
+<body>
+
+    <div class="header-bar">
+        <div class="logo">MyLumy</div>
+        <button type="button" class="icon-btn" id="btnOpenAppSettings" title="Настройки приложения">
+            <svg class="svg-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l-.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l-.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06-.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09A1.65 1.65 0 0 0 19.4 15z"></path></svg>
+        </button>
+    </div>
+
+    <div class="app-container">
+        <!-- Выбор даты -->
+        <div class="date-chip" id="currentDateChip">
+            <span id="dateChipText"></span>
+        </div>
+
+        <!-- Основная карточка ритуалов -->
+        <div class="main-card">
+            <div class="tod-switch">
+                <button type="button" class="tod-btn uniform-brand-title active" id="btnMorning">Утро</button>
+                <button type="button" class="tod-btn uniform-brand-title" id="btnEvening">Вечер</button>
+            </div>
+
+            <div class="routine-list" id="routineContainer"></div>
+
+            <button type="button" class="btn-main-action uniform-brand-title" id="btnOpenSettings">
+                Мои средства <span class="pro-badge" id="proBadge" style="display: none;">PRO</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- Кастомный Календарь (Bottom Sheet) -->
+    <div class="modal-overlay" id="customCalendarModal">
+        <div class="modal-card">
+            <div class="sheet-handle"></div>
+            <div class="cal-header">
+                <button type="button" class="cal-nav-btn" id="calPrevMonth">
+                    <svg class="svg-icon" viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"></polyline></svg>
+                </button>
+                <div class="cal-month-title" id="calMonthTitle"></div>
+                <button type="button" class="cal-nav-btn" id="calNextMonth">
+                    <svg class="svg-icon" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                </button>
+            </div>
+            <div class="cal-grid" id="calGrid"></div>
+            <div style="margin-top: 14px;">
+                <button type="button" class="btn-secondary uniform-brand-title" id="btnCloseCal">Закрыть</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Модальное окно "Мои средства" (Bottom Sheet) -->
+    <div class="modal-overlay" id="settingsModal">
+        <div class="modal-card">
+            <div class="sheet-handle"></div>
+
+            <div class="modal-body-scrollable" id="modalScrollBody">
+                <div class="routine-filter-switch" id="manageFilterSwitch" style="display: none;">
+                    <button type="button" class="filter-tab-btn active" id="tabInRoutine">
+                        <svg class="svg-icon" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                        В уходе (<span id="cntInRoutine">0</span>)
+                    </button>
+                    <button type="button" class="filter-tab-btn" id="tabOnPause">
+                        <svg class="svg-icon" viewBox="0 0 24 24"><rect x="6" y="4" width="4" height="16"></rect><rect x="14" y="4" width="4" height="16"></rect></svg>
+                        На паузе (<span id="cntOnPause">0</span>)
+                    </button>
+                </div>
+
+                <div class="product-manage-list" id="manageList"></div>
+
+                <button type="button" class="btn-add-toggle uniform-brand-title" id="btnAddToggle">+ Добавить средство</button>
+
+                <div id="scannerWrapper" style="display: none; margin-bottom: 12px;">
+                    <div id="barcodeReader" style="border-radius: 14px; overflow: hidden; border: 1px solid var(--border-color); margin-bottom: 6px;"></div>
+                    <button type="button" class="btn-secondary uniform-brand-title" id="btnCancelScanner">Отмена сканирования</button>
+                </div>
+
+                <div id="productFormContainer">
+                    <input type="hidden" id="editProductId" value="">
+                    <input type="hidden" id="pOpenDate" value="">
+
+                    <!-- Поле названия средств -->
+                    <div class="form-section" style="margin-bottom: 10px;">
+                        <div class="form-group">
+                            <label for="pName">Название средства</label>
+                            <div class="input-with-icon-wrapper">
+                                <input type="text" id="pName" class="input-control input-control-with-btn" placeholder="Название или бренд..." autocomplete="off">
+                                <button type="button" class="btn-inline-scan" id="btnScanBarcode" title="Сканировать штрихкод">
+                                    <svg class="svg-icon" viewBox="0 0 24 24"><path d="M3 5v14M7 5v14M11 5v14M15 5v14M19 5v14M21 5v14"></path></svg>
+                                </button>
+                            </div>
+                            <div class="autocomplete-dropdown" id="autocompleteDropdown"></div>
+                        </div>
+                    </div>
+
+                    <!-- Аккордеон параметров -->
+                    <div class="form-section">
+                        <button type="button" class="accordion-toggle-btn" id="btnToggleDetailsAccordion">
+                            <span style="display: flex; align-items: center; gap: 6px;">
+                                <svg class="svg-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l-.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l-.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06-.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09A1.65 1.65 0 0 0 19.4 15z"></path></svg>
+                                Параметры и график
+                            </span>
+                            <span id="detailsAccordionArrow" class="category-chevron"><svg class="svg-icon" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg></span>
+                        </button>
+
+                        <div class="accordion-content" id="detailsAccordionContent">
+                            <div id="smartPresetBanner" style="display: none; background: var(--accent-light); border: 1px dashed var(--accent-main); border-radius: 14px; padding: 10px; margin-bottom: 10px; margin-top: 8px;">
+                                <div id="smartPresetText" style="font-size: 13px; color: var(--text-primary); margin-bottom: 6px; line-height: 1.35;"></div>
+                                <button type="button" id="btnApplyPreset" class="uniform-brand-title" style="width: 100%; background: var(--surface); border: 1px solid var(--border-color); color: var(--text-primary); padding: 8px 12px; border-radius: 8px; font-size: 13px; cursor: pointer;">Применить рекомендуемые паузы</button>
+                            </div>
+
+                            <div class="form-group" style="margin-top: 10px;">
+                                <label>Тип / этап ухода</label>
+                                <div class="type-picker-grid" id="typePicker">
+                                    <button type="button" class="picker-btn" data-type="Очищение">Очищение</button>
+                                    <button type="button" class="picker-btn" data-type="Тонизирование">Тонизирование</button>
+                                    <button type="button" class="picker-btn" data-type="Активы">Активы</button>
+                                    <button type="button" class="picker-btn" data-type="Уход за глазами">Уход за глазами</button>
+                                    <button type="button" class="picker-btn" data-type="Питание / Увлажнение">Увлажнение</button>
+                                    <button type="button" class="picker-btn" data-type="SPF / Защита">SPF / Защита</button>
+                                </div>
+                            </div>
+
+                            <div class="form-group" style="margin-top: 10px;">
+                                <label>Время суток</label>
+                                <div class="picker-group" id="todPicker">
+                                    <button type="button" class="picker-btn active" data-tod="morning">Утро</button>
+                                    <button type="button" class="picker-btn active" data-tod="evening">Вечер</button>
+                                </div>
+                            </div>
+
+                            <div class="pao-highlight-box" style="margin-top: 10px;">
+                                <div class="pao-title">
+                                    <svg class="svg-icon" viewBox="0 0 24 24"><path d="M5 22h14M5 2h14M17 22v-4.172a2 2 0 0 0-.586-1.414L12 12l-4.414 4.414A2 2 0 0 0 7 17.828V22M7 2v4.172a2 2 0 0 0 .586 1.414L12 12l4.414-4.414A2 2 0 0 0 17 6.172V2"></path></svg>
+                                    <span>Срок после вскрытия (PAO)</span>
+                                </div>
+                                <div style="display: flex; align-items: center; justify-content: space-between; font-size: 13px; margin-bottom: 6px;">
+                                    <span style="color: var(--text-secondary); font-weight: 500;">Дата вскрытия: <b id="displayOpenDate" style="color: var(--text-primary);"></b></span>
+                                    <button type="button" id="btnToggleOpenDate" style="background: transparent; border: none; color: var(--accent-main); font-weight: 600; cursor: pointer; text-decoration: underline;">Изменить</button>
+                                </div>
+                                <div class="pao-picker" id="paoPicker">
+                                    <button type="button" class="pao-chip" data-months="3">3M</button>
+                                    <button type="button" class="pao-chip" data-months="6">6M</button>
+                                    <button type="button" class="pao-chip" data-months="12">12M</button>
+                                    <button type="button" class="pao-chip" data-months="24">24M</button>
+                                </div>
+                            </div>
+
+                            <div class="form-group" style="margin-top: 10px;">
+                                <label>Частота применения</label>
+                                <input type="hidden" id="pFreqType" value="daily">
+                                <div class="picker-group" id="freqPicker">
+                                    <button type="button" class="picker-btn active" data-freq="daily">Ежедневно</button>
+                                    <button type="button" class="picker-btn" data-freq="custom">По дням недели</button>
+                                </div>
+                                <div id="daysGroup" style="display: none; margin-top: 8px;">
+                                    <label style="font-size: 12px; color: var(--text-secondary);">Выберите дни недели:</label>
+                                    <div class="days-picker" id="daysPicker">
+                                        <button type="button" class="day-chip" data-day="1">Пн</button>
+                                        <button type="button" class="day-chip" data-day="2">Вт</button>
+                                        <button type="button" class="day-chip" data-day="3">Ср</button>
+                                        <button type="button" class="day-chip" data-day="4">Чт</button>
+                                        <button type="button" class="day-chip" data-day="5">Пт</button>
+                                        <button type="button" class="day-chip" data-day="6">Сб</button>
+                                        <button type="button" class="day-chip" data-day="0">Вс</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div style="background: var(--surface); padding: 10px; border-radius: 12px; border: 1px solid var(--border-color); margin-top: 10px;">
+                                <div style="margin-bottom: 8px;">
+                                    <label style="font-size: 13px; font-weight: 600; color: var(--text-primary); margin-bottom: 4px; display: block;">Пауза до нанесения</label>
+                                    <div class="picker-group" id="pauseBeforePicker">
+                                        <button type="button" class="picker-btn" data-mins="5">5 мин</button>
+                                        <button type="button" class="picker-btn" data-mins="10">10 мин</button>
+                                        <button type="button" class="picker-btn" data-mins="15">15 мин</button>
+                                        <button type="button" class="picker-btn" data-mins="20">20 мин</button>
+                                    </div>
+                                </div>
+                                <div>
+                                    <label style="font-size: 13px; font-weight: 600; color: var(--text-primary); margin-bottom: 4px; display: block;">Пауза после нанесения</label>
+                                    <div class="picker-group" id="pauseAfterPicker">
+                                        <button type="button" class="picker-btn" data-mins="5">5 мин</button>
+                                        <button type="button" class="picker-btn" data-mins="10">10 мин</button>
+                                        <button type="button" class="picker-btn" data-mins="15">15 мин</button>
+                                        <button type="button" class="picker-btn" data-mins="20">20 мин</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Кнопки формы -->
+                    <div id="formFooterButtons" style="display: flex; flex-direction: column; gap: 6px; margin-top: 12px;">
+                        <button type="button" class="btn-action uniform-brand-title" id="btnSaveProduct">Сохранить средство</button>
+                        <button type="button" class="btn-secondary uniform-brand-title" id="btnCancelProduct">Отмена</button>
+                    </div>
+                </div>
+            </div>
+
+            <div style="margin-top: 8px;" id="pinnedModalFooter">
+                <button type="button" class="btn-secondary uniform-brand-title" id="btnCloseSettings">Закрыть</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Action Sheet управления средством -->
+    <div class="modal-overlay" id="productActionModal" style="z-index: 10500;">
+        <div class="modal-card" style="max-width: 400px;">
+            <div class="sheet-handle"></div>
+            <div id="actionModalProductName" class="uniform-brand-title" style="font-size: 18px; color: var(--text-primary); text-align: center; margin-bottom: 14px; word-break: break-word;"></div>
+            <div style="display: flex; flex-direction: column; gap: 8px;">
+                <button type="button" class="btn-action uniform-brand-title" id="btnActionTogglePause" style="display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 15px; padding: 12px;"></button>
+                <button type="button" class="btn-action uniform-brand-title" id="btnActionEdit" style="display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 15px; padding: 12px;">
+                    <svg class="svg-icon" viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+                    Изменить настройки
+                </button>
+                <button type="button" class="btn-secondary uniform-brand-title" id="btnActionDelete" style="display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 15px; padding: 12px; color: #C0392B; border-color: rgba(192, 57, 43, 0.3); background: rgba(192, 57, 43, 0.06);">
+                    <svg class="svg-icon" viewBox="0 0 24 24" style="stroke: #C0392B;"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+                    Удалить из коллекции
+                </button>
+                <button type="button" class="btn-secondary uniform-brand-title" id="btnActionCancel" style="margin-top: 4px; padding: 11px;">Закрыть</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Модальное окно "Настройки приложения" (Bottom Sheet) -->
+    <div class="modal-overlay" id="appSettingsModal">
+        <div class="modal-card">
+            <div class="sheet-handle"></div>
+
+            <div class="modal-body-scrollable">
+                <div class="form-section">
+                    <div class="form-section-title uniform-brand-title">Продвинутый режим</div>
+                    <div style="display: flex; align-items: center; justify-content: space-between; gap: 10px;">
+                        <div>
+                            <div style="font-size: 14.5px; font-weight: 600; color: var(--text-primary);">Мои средства PRO</div>
+                            <div style="font-size: 12px; color: var(--text-secondary); margin-top: 2px;">расширенный список и паузы</div>
+                        </div>
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="toggleSuperCollection">
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <div class="form-section-title uniform-brand-title">Размер шрифта</div>
+                    <div class="picker-group" id="fontSizePicker">
+                        <button type="button" class="picker-btn" data-size="normal">Стандартный</button>
+                        <button type="button" class="picker-btn" data-size="large">Увеличенный</button>
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <div class="version-row">
+                        <span class="version-text uniform-brand-title">MyLumy версия v0.2.0b</span>
+                        <button type="button" class="btn-update-inline uniform-brand-title" id="btnForceUpdate">Проверить обновления</button>
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <div class="form-section-title uniform-brand-title">Перенос и бэкап</div>
+                    <div style="display: flex; flex-direction: column; gap: 6px;">
+                        <button type="button" class="btn-secondary small-font uniform-brand-title" id="btnCopyShareLink">Скопировать ссылку переноса</button>
+                        <button type="button" class="btn-secondary small-font uniform-brand-title" id="btnExportJson">Скачать архив</button>
+                        <button type="button" class="btn-secondary small-font uniform-brand-title" id="btnImportJson">Загрузить архив</button>
+                        <input type="file" id="jsonFileInput" accept=".json" style="display: none;">
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <div class="form-section-title uniform-brand-title">Тема оформления</div>
+                    <div style="display: flex; gap: 6px; width: 100%; flex-wrap: wrap;" id="themeRow">
+                        <button type="button" class="picker-btn" data-theme="sunlit" style="flex: 1; min-width: 40px; background: #E87A5D; border-color: #E87A5D;" title="Sunlit Gloss"></button>
+                        <button type="button" class="picker-btn" data-theme="berry" style="flex: 1; min-width: 40px; background: #D96B94; border-color: #D96B94;" title="Berry Velvet"></button>
+                        <button type="button" class="picker-btn" data-theme="icederm" style="flex: 1; min-width: 40px; background: #2B78A3; border-color: #2B78A3;" title="Ice Derm"></button>
+                        <button type="button" class="picker-btn" data-theme="espresso" style="flex: 1; min-width: 40px; background: #6F4E37; border-color: #6F4E37;" title="Espresso"></button>
+                        <button type="button" class="picker-btn" data-theme="cyberglow" style="flex: 1; min-width: 40px; background: #8A5CF5; border-color: #8A5CF5;" title="Cyber Glow"></button>
+                        <button type="button" class="picker-btn" data-theme="midnight" style="flex: 1; min-width: 40px; background: #4E9EFF; border-color: #4E9EFF;" title="Midnight Calm"></button>
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <div class="form-section-title uniform-brand-title">Документы</div>
+                    <div style="display: flex; flex-direction: column; gap: 6px;">
+                        <a href="https://tatikhi.github.io/MyLumy/terms.html" target="_blank" class="btn-secondary small-font uniform-brand-title" style="text-decoration: none; text-align: center; display: block;">Условия использования</a>
+                        <a href="https://tatikhi.github.io/MyLumy/politic.html" target="_blank" class="btn-secondary small-font uniform-brand-title" style="text-decoration: none; text-align: center; display: block;">Политика конфиденциальности</a>
+                    </div>
+                </div>
+            </div>
+
+            <div style="margin-top: 8px;">
+                <button type="button" class="btn-secondary uniform-brand-title" id="btnCloseAppSettings">Закрыть</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Стартовое окно (Приветствие и согласие) -->
+    <div class="modal-overlay" id="welcomeModal" style="z-index: 12000;">
+        <div class="modal-card" style="max-width: 420px; padding: 20px 18px;">
+            <div class="sheet-handle"></div>
+            <div class="brand-font" style="font-size: 26px; text-align: center; color: var(--accent-main); margin-bottom: 12px;">
+                Добро пожаловать в MyLumy
+            </div>
+
+            <div style="font-size: 14.5px; color: var(--text-primary); text-align: center; margin-bottom: 16px; line-height: 1.4;">
+                Ваш личный трекер для осознанного ухода за кожей.
+            </div>
+
+            <div style="background: rgba(192, 57, 43, 0.08); border: 1px solid rgba(192, 57, 43, 0.3); border-radius: 14px; padding: 12px; margin-bottom: 16px;">
+                <div style="font-size: 13.5px; font-weight: 700; color: #C0392B; margin-bottom: 4px; display: flex; align-items: center; gap: 6px;">
+                    <svg class="svg-icon" viewBox="0 0 24 24" style="stroke: #C0392B;"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+                    Важное предупреждение
+                </div>
+                <div style="font-size: 12.5px; color: var(--text-secondary); line-height: 1.35;">
+                    MyLumy — это только инструмент-органайзер, а не медицинский сервис. Приложение не дает медицинских назначений. Перед использованием сильных активов обязательно консультируйтесь с врачом-дерматологом.
+                </div>
+            </div>
+
+            <div style="font-size: 12px; color: var(--text-secondary); text-align: center; line-height: 1.4; margin-bottom: 16px;">
+                Нажимая кнопку ниже, вы подтверждаете, что вам есть 18 лет, и принимаете<br>
+                <a href="https://tatikhi.github.io/MyLumy/terms.html" target="_blank" style="color: var(--accent-main); font-weight: 600;">Условия использования</a> и 
+                <a href="https://tatikhi.github.io/MyLumy/politic.html" target="_blank" style="color: var(--accent-main); font-weight: 600;">Политику конфиденциальности</a>.
+            </div>
+
+            <button type="button" class="btn-action uniform-brand-title" id="btnAgreeAndStart">
+                Начать использовать
+            </button>
+        </div>
+    </div>
+
+    <div class="toast-notification uniform-brand-title" id="toastNotification"></div>
+
+    <script>
+        const APP_VERSION = 'v0.2.0b';
+        const OLD_THEMES = ['nude', 'mint', 'lavender', 'sage'];
+
+        const THEME_COLORS = {
+            sunlit: '#FFF5F0',
+            berry: '#1D161E',
+            icederm: '#F0F6FA',
+            espresso: '#F8F4EE',
+            cyberglow: '#F5F0FE',
+            midnight: '#0F141C'
+        };
+
+        // Изолированное безопасное хранилище с оперативным фоллбеком
+        const memoryStorage = {};
+        const safeStorage = {
+            getItem(key) {
+                try { return localStorage.getItem(key); }
+                catch (e) { return memoryStorage[key] || null; }
+            },
+            setItem(key, value) {
+                try { localStorage.setItem(key, String(value)); }
+                catch (e) { memoryStorage[key] = String(value); }
+            },
+            removeItem(key) {
+                try { localStorage.removeItem(key); }
+                catch (e) { delete memoryStorage[key]; }
+            }
+        };
+
+        function applyTelegramThemeColors(theme) {
+            if (window.Telegram?.WebApp) {
+                const color = THEME_COLORS[theme] || THEME_COLORS.sunlit;
+                try {
+                    if (window.Telegram.WebApp.setHeaderColor) window.Telegram.WebApp.setHeaderColor(color);
+                    if (window.Telegram.WebApp.setBackgroundColor) window.Telegram.WebApp.setBackgroundColor(color);
+                } catch(e) {}
+            }
+        }
+
+        const tgCloud = {
+            isAvailable() { return !!(window.Telegram?.WebApp?.CloudStorage); },
+            setItem(key, value) {
+                return new Promise((resolve) => {
+                    const strValue = typeof value === 'object' ? JSON.stringify(value) : String(value);
+                    safeStorage.setItem(key, strValue);
+                    if (this.isAvailable()) {
+                        window.Telegram.WebApp.CloudStorage.setItem(key, strValue, (err, success) => resolve(success));
+                    } else resolve(true);
+                });
+            },
+            getItem(key) {
+                return new Promise((resolve) => {
+                    if (this.isAvailable()) {
+                        window.Telegram.WebApp.CloudStorage.getItem(key, (err, value) => {
+                            if (!err && value !== null && value !== undefined && value !== '') resolve(value);
+                            else resolve(safeStorage.getItem(key) || null);
+                        });
+                    } else resolve(safeStorage.getItem(key) || null);
+                });
+            }
+        };
+
+        function triggerHaptic(pattern = 15) {
+            if (navigator.vibrate) {
+                try { navigator.vibrate(pattern); } catch (e) {}
+            }
+        }
+
+        function confirmAction(message, onConfirm) {
+            const isTelegram = window.Telegram && window.Telegram.WebApp && window.Telegram.WebApp.platform !== 'unknown' && window.Telegram.WebApp.initData !== '';
+            if (isTelegram && window.Telegram.WebApp.showConfirm) {
+                window.Telegram.WebApp.showConfirm(message, (approved) => { if (approved) onConfirm(); });
+            } else {
+                if (confirm(message)) onConfirm();
+            }
+        }
+
+        function escapeHtml(str) {
+            if (typeof str !== 'string') return '';
+            return str.replace(/[&<>"']/g, function(m) {
+                return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' }[m];
+            });
+        }
+
+        function addMonthsSafely(dateObj, months) {
+            const d = new Date(dateObj);
+            const currentDay = d.getDate();
+            d.setMonth(d.getMonth() + Number(months));
+            if (d.getDate() !== currentDay) d.setDate(0);
+            return d;
+        }
+
+        function toBase64(str) {
+            return btoa(encodeURIComponent(str).replace(/%([0-9A-F]{2})/g, (match, p1) => String.fromCharCode('0x' + p1)));
+        }
+
+        function fromBase64(str) {
+            return decodeURIComponent(Array.prototype.map.call(atob(str), c => '%' + ('0' + c.charCodeAt(0).toString(16)).slice(-2)).join(''));
+        }
+
+        function formatDateForDisplay(dateStr) {
+            if (!dateStr) return '';
+            const parts = dateStr.split('-');
+            if (parts.length !== 3) return dateStr;
+            return `${parts[2]}.${parts[1]}.${parts[0]}`;
+        }
+
+        function updateOpenDateDisplay() {
+            const openDateVal = document.getElementById('pOpenDate').value || getLocalTodayStr();
+            const displayEl = document.getElementById('displayOpenDate');
+            if (displayEl) displayEl.innerText = formatDateForDisplay(openDateVal);
+        }
+
+        function updateProBadgeUI() {
+            const proBadge = document.getElementById('proBadge');
+            if (proBadge) {
+                proBadge.style.display = isSuperCollectionEnabled ? 'inline-block' : 'none';
+            }
+        }
+
+        const localProductDictionary = [
+            "Патчи для глаз", "Патчи гидрогелевые", "Патчи с кофеином", "Пенка для умывания", "Гель для умывания", 
+            "Гидрофильное масло", "Гидрофильный бальзам", "Мицеллярная вода", "Энзимная пудра", "Тонер увлажняющий", 
+            "Тонер успокаивающий", "Тоник кислотный", "Эссенция с муцином", "Мист для лица", "Сыворотка с гиалуроновой кислотой", 
+            "Сыворотка с ниацинамидом", "Сыворотка с витамином C", "Сыворотка с ретинолом", "Сыворотка с пептидами", 
+            "Крем для веках", "Крем вокруг глаз", "Увлажняющий крем", "Питательный крем", "Восстанавливающий крем", 
+            "Солнцезащитный крем SPF 50", "Ночная маска", "Тканевая маска", "Глиняная маска", "Бальзам для губ"
+        ];
+
+        const SMART_PRESETS = [
+            {
+                keywords: ['spf', 'спф', 'солнц', 'sunscreen', 'sun fluid', 'sun stick', 'санскрин', 'защит'],
+                type: 'SPF / Защита', pao: '6', tods: ['morning'], freqType: 'daily', pauseBefore: 5, pauseAfter: 15,
+                reason: 'SPF-фильтрам требуется 5 минут после увлажняющего крема и 15 минут после нанесения для формирования непрерывной защитной пленки.'
+            },
+            {
+                keywords: ['ретин', 'retin', 'адапален', 'adapalene', 'третиноин', 'tretinoin', 'тазаротен', 'дифферин'],
+                type: 'Активы', pao: '6', tods: ['evening'], freqType: 'custom', days: [1, 4], pauseBefore: 15, pauseAfter: 15,
+                reason: 'Ретиноиды фотосенсибильны, наносятся строго вечером на полностью сухую кожу (пауза 15 мин). Пауза 15 мин до закрытия кремом минимизирует раздражение.'
+            },
+            {
+                keywords: ['кислот', 'acid', 'aha', 'bha', 'pha', 'гликол', 'салицил', 'миндаль', 'молочн', 'пилинг'],
+                type: 'Активы', pao: '12', tods: ['evening'], freqType: 'custom', days: [1, 4], pauseBefore: 5, pauseAfter: 15,
+                reason: 'Кислотам требуется выдержка 15 минут для полноценной работы при естественном кислотном pH кожи перед нанесением следующего ухода.'
+            },
+            {
+                keywords: ['бензоил', 'benzoyl', 'базирон', 'точечн', 'spot', 'циндол', 'прыщ', 'болтушка'],
+                type: 'Активы', pao: '6', tods: ['evening'], freqType: 'daily', pauseBefore: 5, pauseAfter: 10,
+                reason: 'Точечные средства от акне высушивают воспаления и наносятся локально с выдержкой 10 минут.'
+            },
+            {
+                keywords: ['витамин c', 'витамин с', 'vitamin c', 'ascorbi', 'аскорбин'],
+                type: 'Активы', pao: '3', tods: ['morning'], freqType: 'daily', pauseBefore: 0, pauseAfter: 10,
+                reason: 'Витамин C — утренний антиоксидант. Кислые формы быстро окисляются (PAO 3M). Выдержка 10 минут.'
+            },
+            {
+                keywords: ['азелаин', 'azelaic', 'скинорен', 'азелик'],
+                type: 'Активы', pao: '6', tods: ['morning', 'evening'], freqType: 'daily', pauseBefore: 5, pauseAfter: 10,
+                reason: 'Азелаиновая кислота не вызывает фоточувствительности и подходит для ежедневного применения.'
+            },
+            {
+                keywords: ['гидрофильн', 'cleansing oil', 'cleansing balm', 'двухфазн', 'бальзам для снятия'],
+                type: 'Очищение', pao: '12', tods: ['evening'], freqType: 'daily', pauseBefore: 0, pauseAfter: 0,
+                reason: 'Гидрофильное масло — 1-й этап очищения, эффективный строго вечером для растворения SPF и макияжа.'
+            },
+            {
+                keywords: ['энзим', 'enzyme'],
+                type: 'Очищение', pao: '12', tods: ['evening'], freqType: 'custom', days: [2, 5], pauseBefore: 0, pauseAfter: 0,
+                reason: 'Энзимная пудра мягко отшелушивает клетки. Применяется 2–3 раза в неделю вечером.'
+            },
+            {
+                keywords: ['ночн', 'sleeping'],
+                type: 'Питание / Увлажнение', pao: '12', tods: ['evening'], freqType: 'custom', days: [2, 5], pauseBefore: 5, pauseAfter: 0,
+                reason: 'Ночные маски работают во время сна. Применяются вечером 2–3 раза в неделю.'
+            },
+            {
+                keywords: ['патч', 'patch'],
+                type: 'Уход за глазами', pao: '3', tods: ['morning', 'evening'], freqType: 'daily', pauseBefore: 0, pauseAfter: 15,
+                reason: 'Патчи универсальны: утром тонизируют и снимают отёчность, вечером интенсивно увлажняют.'
+            },
+            {
+                keywords: ['тканев', 'sheet mask', 'глинян', 'альгинат', 'очищающ маск', 'mask'],
+                type: 'Питание / Увлажнение', pao: '12', tods: ['morning', 'evening'], freqType: 'custom', days: [2, 5], pauseBefore: 0, pauseAfter: 0,
+                reason: 'Маски универсальны: экспресс-увлажнение перед макияжем или глубокое очищение вечером.'
+            },
+            {
+                keywords: ['бакучиол', 'bakuchiol'],
+                type: 'Активы', pao: '12', tods: ['morning', 'evening'], freqType: 'daily', pauseBefore: 0, pauseAfter: 5,
+                reason: 'Растительный аналог ретинола без фотосенсибилизации. Безопасен утром и вечером.'
+            },
+            {
+                keywords: ['пептид', 'peptide', 'matrixyl', 'argireline', 'pdrn', 'полинуклеотид'],
+                type: 'Активы', pao: '12', tods: ['morning', 'evening'], freqType: 'daily', pauseBefore: 0, pauseAfter: 5,
+                reason: 'Пептиды стимулируют синтез коллагена и укрепляют барьер. Подходят для применения утром и вечером.'
+            },
+            {
+                keywords: ['век', 'вокруг глаз', 'eye cream', 'eye serum'],
+                type: 'Уход за глазами', pao: '6', tods: ['morning', 'evening'], freqType: 'daily', pauseBefore: 0, pauseAfter: 0,
+                reason: 'Базовый ежедневный уход за чувствительной зоной вокруг глаз.'
+            },
+            {
+                keywords: ['гиалурон', 'hyaluron', 'пантенол', 'pantenol', 'алоэ', 'aloe', 'ниацинамид', 'niacinamide', 'центелл', 'cica', 'сыворотк', 'serum', 'ампул', 'бустер'],
+                type: 'Активы', pao: '12', tods: ['morning', 'evening'], freqType: 'daily', pauseBefore: 0, pauseAfter: 0,
+                reason: 'Базовые увлажняющие и успокаивающие сыворотки подходят для ежедневного применения.'
+            },
+            {
+                keywords: ['увлажня', 'питательн', 'восстанавлива', 'крем', 'moisturizer', 'эмульсия', 'флюид', 'церамид', 'ceramide', 'ламелляр'],
+                type: 'Питание / Увлажнение', pao: '12', tods: ['morning', 'evening'], freqType: 'daily', pauseBefore: 0, pauseAfter: 0,
+                reason: 'Базовые кремы для восстановления гидролипидного барьера и закрытия активов.'
+            },
+            {
+                keywords: ['пенк', 'гель для умыв', 'умывалка', 'foam', 'очищающ', 'мицелляр'],
+                type: 'Очищение', pao: '12', tods: ['morning', 'evening'], freqType: 'daily', pauseBefore: 0, pauseAfter: 0,
+                reason: 'Базовое очищение на водной основе для утреннего и вечернего ухода.'
+            },
+            {
+                keywords: ['тонер', 'тоник', 'эссенци', 'toner', 'лосьон', 'мист', 'софтнер'],
+                type: 'Тонизирование', pao: '12', tods: ['morning', 'evening'], freqType: 'daily', pauseBefore: 0, pauseAfter: 0,
+                reason: 'Базовое тонизирование для восстановления естественного pH кожи после воды.'
+            }
+        ];
+
+        function detectSmartPreset(productName) {
+            if (!productName || productName.trim().length < 2) return null;
+            const clean = productName.toLowerCase().trim();
+            return SMART_PRESETS.find(p => p.keywords.some(kw => clean.includes(kw.toLowerCase()))) || null;
+        }
+
+        class RoutineTimerEngine {
+            constructor() {
+                this.endTime = null;
+                this.timerId = null;
+                this.wakeLock = null;
+                this.onTick = null;
+                this.onComplete = null;
+                this.audioCtx = null;
+                document.addEventListener('visibilitychange', () => this.sync());
+                window.addEventListener('focus', () => this.sync());
+            }
+
+            warmupAudio() {
+                try {
+                    const AudioCtx = window.AudioContext || window.webkitAudioContext;
+                    if (!AudioCtx) return;
+                    if (!this.audioCtx) this.audioCtx = new AudioCtx();
+                    if (this.audioCtx.state === 'suspended') this.audioCtx.resume();
+                } catch (e) {}
+            }
+
+            async start(durationMinutes, onTick, onComplete) {
+                this.warmupAudio();
+                this.stop();
+                this.onTick = onTick;
+                this.onComplete = onComplete;
+                this.endTime = Date.now() + (durationMinutes * 60 * 1000);
+                await this.requestWakeLock();
+                this.timerId = setInterval(() => this.tick(), 500);
+                this.tick();
+            }
+
+            tick() {
+                if (!this.endTime) return;
+                const remainingMs = Math.max(0, this.endTime - Date.now());
+                const remainingSeconds = Math.ceil(remainingMs / 1000);
+                if (this.onTick) {
+                    const mins = Math.floor(remainingSeconds / 60);
+                    const secs = remainingSeconds % 60;
+                    this.onTick(`${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`, remainingSeconds);
+                }
+                if (remainingMs <= 0) this.finish();
+            }
+
+            sync() { if (this.endTime) this.tick(); }
+
+            finish() {
+                this.stop();
+                this.playChimeSound();
+                triggerHaptic([200, 100, 200, 100, 300]);
+                if (this.onComplete) this.onComplete();
+            }
+
+            stop() {
+                if (this.timerId) clearInterval(this.timerId);
+                this.timerId = null;
+                this.endTime = null;
+                this.releaseWakeLock();
+            }
+
+            async requestWakeLock() {
+                if ('wakeLock' in navigator) {
+                    try { this.wakeLock = await navigator.wakeLock.request('screen'); } catch (err) {}
+                }
+            }
+
+            releaseWakeLock() {
+                if (this.wakeLock) {
+                    this.wakeLock.release().catch(() => {});
+                    this.wakeLock = null;
+                }
+            }
+
+            playChimeSound() {
+                try {
+                    const AudioCtx = window.AudioContext || window.webkitAudioContext;
+                    if (!AudioCtx) return;
+                    if (!this.audioCtx) this.audioCtx = new AudioCtx();
+                    if (this.audioCtx.state === 'suspended') this.audioCtx.resume();
+                    const ctx = this.audioCtx;
+                    const playNote = (freq, time, duration) => {
+                        const osc = ctx.createOscillator();
+                        const gain = ctx.createGain();
+                        osc.type = 'sine';
+                        osc.frequency.setValueAtTime(freq, time);
+                        gain.gain.setValueAtTime(0.2, time);
+                        gain.gain.exponentialRampToValueAtTime(0.001, time + duration);
+                        osc.connect(gain); gain.connect(ctx.destination);
+                        osc.start(time); osc.stop(time + duration);
+                    };
+                    playNote(523.25, ctx.currentTime, 0.8);
+                    playNote(659.25, ctx.currentTime + 0.15, 1.2);
+                } catch (e) {}
+            }
+        }
+
+        const activeRoutineTimer = new RoutineTimerEngine();
+
+        function getLocalTodayStr(d) {
+            if (!d) {
+                const now = new Date();
+                if (now.getHours() < 3) now.setDate(now.getDate() - 1);
+                d = now;
+            }
+            const year = d.getFullYear();
+            const month = String(d.getMonth() + 1).padStart(2, '0');
+            const day = String(d.getDate()).padStart(2, '0');
+            return `${year}-${month}-${day}`;
+        }
+
+        // Дефолтный наряд средств, если хранилище еще пустое
+        const defaultInitialProducts = [
+            {
+                id: 101,
+                name: "Мягкая пенка для умывания",
+                type: "Очищение",
+                tods: ["morning", "evening"],
+                freqType: "daily",
+                days: [],
+                pauseBefore: null,
+                pauseAfter: null,
+                openDate: getLocalTodayStr(),
+                addedDate: getLocalTodayStr(),
+                paoMonths: "12",
+                inRoutine: true
+            },
+            {
+                id: 102,
+                name: "Сыворотка с витамином C 10%",
+                type: "Активы",
+                tods: ["morning"],
+                freqType: "daily",
+                days: [],
+                pauseBefore: 0,
+                pauseAfter: 10,
+                openDate: getLocalTodayStr(),
+                addedDate: getLocalTodayStr(),
+                paoMonths: "3",
+                inRoutine: true
+            },
+            {
+                id: 103,
+                name: "Солнцезащитный флюид SPF 50",
+                type: "SPF / Защита",
+                tods: ["morning"],
+                freqType: "daily",
+                days: [],
+                pauseBefore: 5,
+                pauseAfter: 15,
+                openDate: getLocalTodayStr(),
+                addedDate: getLocalTodayStr(),
+                paoMonths: "6",
+                inRoutine: true
+            },
+            {
+                id: 104,
+                name: "Сыворотка с ретинолом 0.5%",
+                type: "Активы",
+                tods: ["evening"],
+                freqType: "custom",
+                days: [1, 4],
+                pauseBefore: 15,
+                pauseAfter: 15,
+                openDate: getLocalTodayStr(),
+                addedDate: getLocalTodayStr(),
+                paoMonths: "6",
+                inRoutine: true
+            },
+            {
+                id: 105,
+                name: "Восстанавливающий крем",
+                type: "Питание / Увлажнение",
+                tods: ["morning", "evening"],
+                freqType: "daily",
+                days: [],
+                pauseBefore: null,
+                pauseAfter: null,
+                openDate: getLocalTodayStr(),
+                addedDate: getLocalTodayStr(),
+                paoMonths: "12",
+                inRoutine: true
+            }
+        ];
+
+        let products = JSON.parse(safeStorage.getItem('cb_custom_products') || JSON.stringify(defaultInitialProducts));
+        let barcodeCache = JSON.parse(safeStorage.getItem('cb_barcode_cache') || '{}');
+        let isSuperCollectionEnabled = safeStorage.getItem('cb_super_collection') === 'true';
+        let openCategoryIndexes = new Set();
+
+        function getSystemTOD() {
+            const h = new Date().getHours();
+            return (h >= 3 && h < 18) ? 'morning' : 'evening';
+        }
+
+        let currentTOD = getSystemTOD();
+        let currentManageTab = 'inRoutine';
+        let activeSelectedProductId = null;
+        let selectedPAOMonths = '12';
+        let selectedPauseBeforeVal = null;
+        let selectedPauseAfterVal = null;
+        let currentDetectedPreset = null;
+        let html5QrCodeScanner = null;
+        let isScannerBusy = false;
+        let autocompleteDebounceTimer = null;
+        let calCurrentViewDate = new Date();
+        let calendarTargetMode = 'routine';
+
+        const CATEGORIES = ["Очищение", "Тонизирование", "Активы", "Уход за глазами", "Питание / Увлажнение", "SPF / Защита"];
+        const typeOrder = { "Очищение": 1, "Тонизирование": 2, "Активы": 3, "Уход за глазами": 4, "Питание / Увлажнение": 5, "SPF / Защита": 6 };
+
+        function getSortWeight(item) {
+            const name = (item.name || '').toLowerCase();
+            const baseCategoryWeight = (typeOrder[item.type] || 99) * 100;
+            let subWeight = 50;
+
+            if (name.includes('патч')) return 250; 
+            if (name.includes('тканев') && name.includes('маск')) return 260; 
+
+            if (item.type === 'Очищение') {
+                if (name.includes('гидрофильн') || name.includes('масло') || name.includes('бальзам') || name.includes('мицелляр')) subWeight = 10;
+                else if (name.includes('энзим') || name.includes('пудра')) subWeight = 20;
+                else if (name.includes('пенка') || name.includes('гель') || name.includes('foam')) subWeight = 30;
+            } else if (item.type === 'Тонизирование') {
+                if (name.includes('тонер') || name.includes('тоник') || name.includes('лосьон')) subWeight = 20;
+            } else if (item.type === 'Активы') {
+                if (name.includes('сыворотк') || name.includes('serum') || name.includes('ампул')) subWeight = 20;
+            }
+
+            return baseCategoryWeight + subWeight;
+        }
+
+        let installDateStr = safeStorage.getItem('cb_install_date');
+        if (!installDateStr) {
+            installDateStr = getLocalTodayStr();
+            safeStorage.setItem('cb_install_date', installDateStr);
+        }
+
+        function getRoutineDateObj() {
+            const selectedDateStr = safeStorage.getItem('cb_selected_date');
+            if (selectedDateStr) {
+                const parts = selectedDateStr.split('-');
+                return new Date(parts[0], parts[1] - 1, parts[2], 12, 0, 0);
+            }
+            const now = new Date();
+            if (now.getHours() < 3) now.setDate(now.getDate() - 1);
+            now.setHours(12, 0, 0, 0);
+            return now;
+        }
+
+        function getAllowedStartDateObj() {
+            const parts = installDateStr.split('-');
+            const installObj = new Date(parts[0], parts[1] - 1, parts[2], 12, 0, 0);
+            const thirtyDaysAgo = new Date();
+            thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
+            thirtyDaysAgo.setHours(12, 0, 0, 0);
+            return (installObj > thirtyDaysAgo) ? installObj : thirtyDaysAgo;
+        }
+
+        function renderCurrentDateChip() {
+            const routineDate = getRoutineDateObj();
+            let chipText = routineDate.toLocaleDateString('ru-RU', { day: 'numeric', month: 'long' });
+            const selectedDateStr = safeStorage.getItem('cb_selected_date');
+            const todayStr = getLocalTodayStr();
+
+            if (selectedDateStr && selectedDateStr > todayStr) chipText += " (план)";
+            else if (selectedDateStr && selectedDateStr < todayStr) chipText += " (архив)";
+
+            document.getElementById('dateChipText').innerText = chipText;
+        }
+
+        function openCustomCalendar(mode = 'routine') {
+            triggerHaptic(20);
+            calendarTargetMode = mode;
+            if (calendarTargetMode === 'pao') {
+                const currentOpenDate = document.getElementById('pOpenDate').value || getLocalTodayStr();
+                const parts = currentOpenDate.split('-');
+                calCurrentViewDate = new Date(parts[0], parts[1] - 1, parts[2], 12, 0, 0);
+            } else {
+                calCurrentViewDate = getRoutineDateObj();
+            }
+            renderCustomCalendar();
+            openModalElement(document.getElementById('customCalendarModal'));
+        }
+
+        function closeCustomCalendar() {
+            triggerHaptic(10);
+            closeModalElement(document.getElementById('customCalendarModal'));
+        }
+
+        function renderCustomCalendar() {
+            const year = calCurrentViewDate.getFullYear();
+            const month = calCurrentViewDate.getMonth();
+            const monthNames = ["Январь", "Февраль", "Март", "Апрель", "Май", "Июнь", "Июль", "Август", "Сентябрь", "Октябрь", "Ноябрь", "Декабрь"];
+            document.getElementById('calMonthTitle').innerText = `${monthNames[month]} ${year}`;
+
+            const grid = document.getElementById('calGrid');
+            grid.innerHTML = '';
+
+            const dayNames = ["Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Вс"];
+            dayNames.forEach(dn => grid.innerHTML += `<div class="cal-day-name">${dn}</div>`);
+
+            const firstDay = new Date(year, month, 1);
+            let startDay = firstDay.getDay() - 1;
+            if (startDay === -1) startDay = 6;
+
+            for (let i = 0; i < startDay; i++) grid.innerHTML += `<div></div>`;
+
+            const daysInMonth = new Date(year, month + 1, 0).getDate();
+            const todayStr = getLocalTodayStr();
+            const allowedMinStr = getLocalTodayStr(getAllowedStartDateObj());
+
+            let activeSelectedStr = (calendarTargetMode === 'pao')
+                ? (document.getElementById('pOpenDate').value || todayStr)
+                : (safeStorage.getItem('cb_selected_date') || todayStr);
+
+            for (let d = 1; d <= daysInMonth; d++) {
+                const curDateObj = new Date(year, month, d, 12, 0, 0);
+                const curStr = getLocalTodayStr(curDateObj);
+                const isSelected = (curStr === activeSelectedStr);
+                const isDisabled = (calendarTargetMode === 'routine' && curStr < allowedMinStr) || (calendarTargetMode === 'pao' && curStr > todayStr);
+
+                let cellClass = 'cal-day-cell';
+                if (isSelected) cellClass += ' selected';
+                else if (isDisabled) cellClass += ' disabled';
+                else if (curStr < todayStr) cellClass += ' archive-day';
+                else if (curStr > todayStr) cellClass += ' future-day';
+
+                const cell = document.createElement('div');
+                cell.className = cellClass;
+                cell.innerText = d;
+
+                if (!isDisabled) {
+                    cell.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        triggerHaptic(25);
+                        if (calendarTargetMode === 'pao') {
+                            document.getElementById('pOpenDate').value = curStr;
+                            updateOpenDateDisplay();
+                            closeCustomCalendar();
+                            showToast("Дата вскрытия сохранена");
+                        } else {
+                            if (curStr === getLocalTodayStr()) safeStorage.removeItem('cb_selected_date');
+                            else safeStorage.setItem('cb_selected_date', curStr);
+                            switchTOD(currentTOD);
+                            closeCustomCalendar();
+                        }
+                    });
+                }
+                grid.appendChild(cell);
+            }
+        }
+
+        function switchTOD(tod) {
+            triggerHaptic(20);
+            currentTOD = tod;
+            document.getElementById('btnMorning').classList.toggle('active', tod === 'morning');
+            document.getElementById('btnEvening').classList.toggle('active', tod === 'evening');
+            renderRoutine();
+        }
+
+        function getActiveProductsForCurrentView() {
+            const routineDate = getRoutineDateObj();
+            const targetDayOfWeek = routineDate.getDay();
+
+            let activeProducts = products.filter(p => {
+                if (p.inRoutine === false) return false; 
+                const tads = Array.isArray(p.tods) ? p.tods : [];
+                const matchTOD = tads.includes(currentTOD);
+                let matchDay = true;
+                if (p.freqType === 'custom') {
+                    matchDay = Array.isArray(p.days) && p.days.includes(targetDayOfWeek);
+                }
+                return matchTOD && matchDay;
+            });
+
+            activeProducts.sort((a, b) => getSortWeight(a) - getSortWeight(b));
+            return activeProducts;
+        }
+
+        function isTimerAllowedForCurrentView() {
+            const selectedDateStr = safeStorage.getItem('cb_selected_date');
+            const todayStr = getLocalTodayStr();
+            return (!selectedDateStr || selectedDateStr === todayStr) && (currentTOD === getSystemTOD());
+        }
+
+        function getMondayOfWeek(d) {
+            const date = new Date(d);
+            const day = date.getDay();
+            const diff = date.getDate() - day + (day === 0 ? -6 : 1);
+            return new Date(date.setDate(diff));
+        }
+
+        function calcActiveWeekNumber(addedDateStr, routineDateObj) {
+            if (!addedDateStr) return 1;
+            const parts = addedDateStr.split('-');
+            if (parts.length !== 3) return 1;
+            const startObj = new Date(Number(parts[0]), Number(parts[1]) - 1, Number(parts[2]), 12, 0, 0);
+
+            const startMon = getMondayOfWeek(startObj);
+            startMon.setHours(0, 0, 0, 0);
+
+            const routineMon = getMondayOfWeek(routineDateObj);
+            routineMon.setHours(0, 0, 0, 0);
+
+            const diffTime = routineMon - startMon;
+            const diffWeeks = Math.floor(diffTime / (1000 * 60 * 60 * 24 * 7));
+            return Math.max(1, diffWeeks + 1);
+        }
+
+        function renderRoutine() {
+            renderCurrentDateChip();
+            const container = document.getElementById('routineContainer');
+            const activeProducts = getActiveProductsForCurrentView();
+
+            if (activeProducts.length === 0) {
+                const arrowDownSvg = `<svg class="svg-icon" viewBox="0 0 24 24" style="margin: 6px auto 0; display: block; color: var(--accent-main);"><polyline points="6 9 12 15 18 9"></polyline></svg>`;
+                container.innerHTML = `<div style="text-align: center; padding: 12px 0 6px; color: var(--text-secondary); font-size: 14.5px; font-weight: 500; line-height: 1.35;">Здесь пока пусто.<br>Добавьте ваше первое средство<br>через кнопку «Мои средства».${arrowDownSvg}</div>`;
+                return;
+            }
+
+            const htmlBuffer = [];
+            const routineDateObj = getRoutineDateObj();
+            const isTimerActive = isTimerAllowedForCurrentView();
+
+            /* Предупреждение косметолога при опасном сочетании активов */
+            if (currentTOD === 'evening') {
+                const hasRetinoids = activeProducts.some(p => {
+                    const n = (p.name || '').toLowerCase();
+                    return n.includes('ретин') || n.includes('retin') || n.includes('адапален') || n.includes('третиноин');
+                });
+                const hasAcids = activeProducts.some(p => {
+                    const n = (p.name || '').toLowerCase();
+                    return n.includes('кислот') || n.includes('acid') || n.includes('aha') || n.includes('bha') || n.includes('гликол') || n.includes('салицил');
+                });
+                if (hasRetinoids && hasAcids) {
+                    htmlBuffer.push(`
+                        <div style="background: rgba(230, 126, 34, 0.12); border: 1px solid #E67E22; border-radius: 14px; padding: 11px; margin-bottom: 10px; font-size: 12.5px; color: var(--text-primary); line-height: 1.35;">
+                            <b style="color: #D35400;">⚠️ Совет косметолога:</b> В уходе одновременно ретиноиды и кислоты. Сочетание мощных активов в один вечер может вызвать раздражение или ожог кожи. Рекомендуется разделить их по дням!
+                        </div>
+                    `);
+                }
+            }
+
+            /* Пауза ДО перед первым средством */
+            if (activeProducts.length > 0) {
+                const firstItem = activeProducts[0];
+                const firstPauseBefore = Number(firstItem.pauseBefore) || 0;
+                if (firstPauseBefore > 0) {
+                    const clockSvg = `<svg class="svg-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 14"></polyline></svg>`;
+                    htmlBuffer.push(`
+                        <div class="pause-step-container">
+                            <button type="button" class="btn-pause-timer" ${isTimerActive ? `onclick="startTimerForStep(this, ${firstPauseBefore})"` : 'style="opacity: 0.5; cursor: default;"'}>
+                                ${clockSvg}
+                                <span>Пауза перед 1-м шагом ${firstPauseBefore} мин</span>
+                            </button>
+                        </div>
+                    `);
+                }
+            }
+
+            activeProducts.forEach((item, index) => {
+                const dotsHtml = calcExpiryDots(item.openDate, item.paoMonths);
+                let weekStepHtml = '';
+
+                if (item.type === 'Активы' || item.freqType === 'custom') {
+                    const startDate = item.addedDate || item.openDate || getLocalTodayStr();
+                    const currentWeekNum = calcActiveWeekNumber(startDate, routineDateObj);
+                    const calendarSvg = `<svg class="svg-icon" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>`;
+                    weekStepHtml = `<span class="item-week-step">${calendarSvg} Неделя ${currentWeekNum}</span>`;
+                }
+
+                htmlBuffer.push(`
+                    <div class="routine-item">
+                        <div class="routine-item-main">
+                            <div class="item-left">
+                                <div class="item-num">${String(index + 1).padStart(2, '0')}</div>
+                                <div class="item-details">
+                                    <span class="item-name">${escapeHtml(item.name)}</span>
+                                    <span class="item-tag">${escapeHtml(item.type)}</span>
+                                    ${weekStepHtml}
+                                </div>
+                                ${dotsHtml}
+                            </div>
+                        </div>
+                    </div>
+                `);
+
+                if (index < activeProducts.length - 1) {
+                    const nextItem = activeProducts[index + 1];
+                    const pauseMins = Math.max(Number(item.pauseAfter) || 0, Number(nextItem.pauseBefore) || 0);
+
+                    if (pauseMins > 0) {
+                        const clockSvg = `<svg class="svg-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 14"></polyline></svg>`;
+                        htmlBuffer.push(`
+                            <div class="pause-step-container">
+                                <button type="button" class="btn-pause-timer" ${isTimerActive ? `onclick="startTimerForStep(this, ${pauseMins})"` : 'style="opacity: 0.5; cursor: default;"'}>
+                                    ${clockSvg}
+                                    <span>Пауза ${pauseMins} мин</span>
+                                </button>
+                            </div>
+                        `);
+                    }
+                }
+            });
+
+            container.innerHTML = htmlBuffer.join('');
+        }
+
+        function startTimerForStep(btnEl, mins) {
+            if (btnEl.classList.contains('running') || btnEl.classList.contains('completed')) return;
+            triggerHaptic(30);
+            btnEl.classList.add('running');
+
+            const clockSvgWhite = `<svg class="svg-icon" viewBox="0 0 24 24" style="stroke: #FFFFFF;"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>`;
+
+            activeRoutineTimer.start(
+                mins,
+                (formatted) => { btnEl.innerHTML = `${clockSvgWhite} <span>${formatted}</span>`; },
+                () => {
+                    btnEl.classList.remove('running');
+                    btnEl.classList.add('completed');
+                    const checkSvg = `<svg class="svg-icon" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg>`;
+                    btnEl.innerHTML = `${checkSvg} <span>Выдержка окончена</span>`;
+                    showToast("Выдержка завершена! Можно наносить следующее средство.");
+                }
+            );
+        }
+
+        function calcExpiryDots(openDateStr, paoMonths) {
+            if (!paoMonths) return `<div class="expiry-dots"><div class="dot dot-gray"></div><div class="dot dot-gray"></div><div class="dot dot-gray"></div></div>`;
+
+            let openDate;
+            if (openDateStr && typeof openDateStr === 'string' && openDateStr.includes('-')) {
+                const parts = openDateStr.split('-');
+                openDate = new Date(Number(parts[0]), Number(parts[1]) - 1, Number(parts[2]), 12, 0, 0);
+            } else {
+                openDate = new Date();
+            }
+
+            const expDate = addMonthsSafely(openDate, paoMonths);
+            const remainingDuration = expDate - new Date();
+            const totalDuration = expDate - openDate;
+
+            if (remainingDuration <= 0) return '<div class="expiry-dots"><div class="dot dot-red"></div></div>';
+            const ratio = remainingDuration / totalDuration;
+            if (ratio > 0.3) return '<div class="expiry-dots"><div class="dot dot-green"></div><div class="dot dot-green"></div><div class="dot dot-green"></div></div>';
+            if (ratio >= 0.1) return '<div class="expiry-dots"><div class="dot dot-orange"></div><div class="dot dot-orange"></div></div>';
+            return '<div class="expiry-dots"><div class="dot dot-red"></div></div>';
+        }
+
+        function openDetailsAccordion() {
+            const content = document.getElementById('detailsAccordionContent');
+            const arrow = document.getElementById('detailsAccordionArrow');
+            if (content && !content.classList.contains('open')) {
+                content.classList.add('open');
+                if (arrow) arrow.style.transform = 'rotate(180deg)';
+            }
+        }
+
+        function closeDetailsAccordion() {
+            const content = document.getElementById('detailsAccordionContent');
+            const arrow = document.getElementById('detailsAccordionArrow');
+            if (content && content.classList.contains('open')) {
+                content.classList.remove('open');
+                if (arrow) arrow.style.transform = 'rotate(0deg)';
+            }
+        }
+
+        function toggleDetailsAccordion() {
+            triggerHaptic(15);
+            const content = document.getElementById('detailsAccordionContent');
+            if (content && content.classList.contains('open')) closeDetailsAccordion();
+            else openDetailsAccordion();
+        }
+
+        function closeAutocomplete() {
+            clearTimeout(autocompleteDebounceTimer);
+            const dropdown = document.getElementById('autocompleteDropdown');
+            if (dropdown) {
+                dropdown.classList.remove('open');
+                dropdown.innerHTML = '';
+                dropdown.style.display = 'none';
+            }
+        }
+
+        function selectAutocompleteItem(val) {
+            triggerHaptic(15);
+            const input = document.getElementById('pName');
+            if (input) {
+                input.value = val;
+                handleNameInput(val, true);
+            }
+            openDetailsAccordion();
+            closeAutocomplete();
+        }
+
+        function handleNameInput(val, isComplete = false) {
+            const cleanQuery = val.trim().toLowerCase();
+
+            if (cleanQuery.length < 2) {
+                closeAutocomplete();
+                applyFormStateFromPreset(null, false);
+                closeDetailsAccordion();
+                return;
+            }
+
+            openDetailsAccordion();
+            currentDetectedPreset = detectSmartPreset(val);
+
+            const isFullMatch = isComplete || localProductDictionary.some(item => item.toLowerCase() === cleanQuery) || products.some(p => p.name.toLowerCase() === cleanQuery);
+            applyFormStateFromPreset(currentDetectedPreset, isFullMatch);
+
+            const userProducts = products.map(p => p.name);
+            const combinedLocal = Array.from(new Set([...userProducts, ...localProductDictionary]));
+
+            let matchedLocal = combinedLocal.filter(item => item.toLowerCase().includes(cleanQuery)).slice(0, 6);
+            renderAutocompleteResults(matchedLocal, []);
+
+            clearTimeout(autocompleteDebounceTimer);
+            autocompleteDebounceTimer = setTimeout(async () => {
+                try {
+                    const res = await fetch(`https://world.openbeautyfacts.org/cgi/search.pl?search_terms=${encodeURIComponent(val)}&search_simple=1&action=process&json=1&page_size=5`);
+                    const data = await res.json();
+                    if (data && data.products && Array.isArray(data.products)) {
+                        const onlineNames = data.products.map(p => p.product_name || p.brands || '').filter(name => name.length > 2);
+                        renderAutocompleteResults(matchedLocal, Array.from(new Set(onlineNames)).slice(0, 4));
+                    }
+                } catch (e) {}
+            }, 300);
+        }
+
+        function applyFormStateFromPreset(preset, showBanner = false) {
+            const banner = document.getElementById('smartPresetBanner');
+            const defaultDays = [1, 4];
+
+            if (preset) {
+                if (preset.reason && showBanner) {
+                    const bulbSvg = `<svg class="svg-icon" viewBox="0 0 24 24" style="margin-right: 4px;"><path d="M9 18h6M10 22h4M15.09 14c.18-.98.65-1.74 1.41-2.5A4.65 4.65 0 0 0 18 8 6 6 0 0 0 6 8c0 1.55.59 2.8 1.5 3.5.76.76 1.23 1.52 1.41 2.5"></path></svg>`;
+                    document.getElementById('smartPresetText').innerHTML = `<b>${bulbSvg} Совет MyLumy:</b> ${escapeHtml(preset.reason)}`;
+                    banner.style.display = 'block';
+                } else banner.style.display = 'none';
+
+                if (preset.type) {
+                    document.querySelectorAll('#typePicker .picker-btn').forEach(b => b.classList.toggle('active', b.dataset.type === preset.type));
+                }
+                if (preset.tods) {
+                    document.querySelectorAll('#todPicker .picker-btn').forEach(b => b.classList.toggle('active', preset.tods.includes(b.dataset.tod)));
+                }
+
+                const targetFreq = preset.freqType || 'daily';
+                document.getElementById('pFreqType').value = targetFreq;
+                document.querySelectorAll('#freqPicker .picker-btn').forEach(b => b.classList.toggle('active', b.dataset.freq === targetFreq));
+                document.getElementById('daysGroup').style.display = (targetFreq === 'custom') ? 'block' : 'none';
+
+                if (targetFreq === 'custom') {
+                    const presetDays = preset.days || defaultDays;
+                    document.querySelectorAll('.day-chip').forEach(chip => {
+                        chip.classList.toggle('active', presetDays.includes(parseInt(chip.dataset.day, 10)));
+                    });
+                }
+
+                applyPAO(preset.pao || '12');
+                setPauseBefore(preset.pauseBefore !== undefined ? preset.pauseBefore : null);
+                setPauseAfter(preset.pauseAfter !== undefined ? preset.pauseAfter : null);
+
+            } else {
+                banner.style.display = 'none';
+                document.querySelectorAll('#typePicker .picker-btn').forEach(b => b.classList.remove('active'));
+                document.querySelectorAll('#todPicker .picker-btn').forEach(b => b.classList.add('active'));
+                document.getElementById('pFreqType').value = 'daily';
+                document.querySelectorAll('#freqPicker .picker-btn').forEach(b => b.classList.toggle('active', b.dataset.freq === 'daily'));
+                document.getElementById('daysGroup').style.display = 'none';
+                document.querySelectorAll('.day-chip').forEach(chip => chip.classList.toggle('active', defaultDays.includes(parseInt(chip.dataset.day, 10))));
+                applyPAO('12');
+                setPauseBefore(null);
+                setPauseAfter(null);
+            }
+        }
+
+        function renderAutocompleteResults(localItems, onlineItems) {
+            const dropdown = document.getElementById('autocompleteDropdown');
+            if (!dropdown) return;
+            const combined = Array.from(new Set([...localItems, ...onlineItems]));
+
+            if (combined.length === 0) {
+                closeAutocomplete();
+                return;
+            }
+
+            dropdown.innerHTML = '';
+            combined.forEach(name => {
+                const itemDiv = document.createElement('div');
+                itemDiv.className = 'autocomplete-item';
+                itemDiv.textContent = name;
+                itemDiv.addEventListener('click', () => selectAutocompleteItem(name));
+                dropdown.appendChild(itemDiv);
+            });
+
+            dropdown.style.display = 'block';
+            dropdown.classList.add('open');
+        }
+
+        document.getElementById('btnApplyPreset').addEventListener('click', (e) => {
+            e.preventDefault();
+            triggerHaptic(20);
+            if (!currentDetectedPreset) return;
+
+            openDetailsAccordion();
+            setPauseBefore(currentDetectedPreset.pauseBefore !== undefined ? currentDetectedPreset.pauseBefore : null);
+            setPauseAfter(currentDetectedPreset.pauseAfter !== undefined ? currentDetectedPreset.pauseAfter : null);
+
+            const targetFreq = currentDetectedPreset.freqType || 'daily';
+            document.getElementById('pFreqType').value = targetFreq;
+            document.querySelectorAll('#freqPicker .picker-btn').forEach(b => b.classList.toggle('active', b.dataset.freq === targetFreq));
+            document.getElementById('daysGroup').style.display = (targetFreq === 'custom') ? 'block' : 'none';
+
+            if (targetFreq === 'custom') {
+                const presetDays = currentDetectedPreset.days || [1, 4];
+                document.querySelectorAll('.day-chip').forEach(chip => chip.classList.toggle('active', presetDays.includes(parseInt(chip.dataset.day, 10))));
+            }
+
+            document.getElementById('smartPresetBanner').style.display = 'none';
+        });
+
+        async function startBarcodeScanner() {
+            triggerHaptic(20);
+            if (isScannerBusy) return;
+            if (typeof Html5Qrcode === 'undefined') return showToast("Сканер недоступен");
+
+            isScannerBusy = true;
+            document.getElementById('scannerWrapper').style.display = 'block';
+
+            if (!html5QrCodeScanner) html5QrCodeScanner = new Html5Qrcode("barcodeReader");
+
+            try {
+                await html5QrCodeScanner.start(
+                    { facingMode: "environment" },
+                    { fps: 10, qrbox: { width: 230, height: 140 } },
+                    async (decodedText) => {
+                        stopBarcodeScanner();
+                        if (barcodeCache[decodedText]) {
+                            document.getElementById('pName').value = barcodeCache[decodedText].name;
+                            handleNameInput(barcodeCache[decodedText].name, true);
+                            openDetailsAccordion();
+                            return;
+                        }
+
+                        try {
+                            const res = await fetch(`https://world.openbeautyfacts.org/api/v2/product/${encodeURIComponent(decodedText)}.json`);
+                            const data = await res.json();
+                            if (data && data.status === 1 && data.product) {
+                                const rawName = data.product.product_name || data.product.brands || '';
+                                if (rawName.length > 2) {
+                                    document.getElementById('pName').value = rawName;
+                                    handleNameInput(rawName, true);
+                                    openDetailsAccordion();
+                                    barcodeCache[decodedText] = { name: rawName, type: 'Очищение' };
+                                    safeStorage.setItem('cb_barcode_cache', JSON.stringify(barcodeCache));
+                                    return;
+                                }
+                            }
+                        } catch (err) {}
+
+                        showToast("Штрихкод не найден в базе.");
+                    },
+                    () => {}
+                );
+            } catch (err) {
+                showToast("Не удалось запустить камеру.");
+                stopBarcodeScanner();
+            } finally {
+                isScannerBusy = false;
+            }
+        }
+
+        async function stopBarcodeScanner() {
+            triggerHaptic(15);
+            if (html5QrCodeScanner) {
+                try { await html5QrCodeScanner.stop(); } catch (e) {}
+            }
+            document.getElementById('scannerWrapper').style.display = 'none';
+            isScannerBusy = false;
+        }
+
+        function applyPAO(months) {
+            triggerHaptic(15);
+            selectedPAOMonths = months;
+            document.querySelectorAll('#paoPicker .pao-chip').forEach(c => {
+                c.classList.toggle('active', c.dataset.months == selectedPAOMonths);
+            });
+        }
+
+        function setPauseBefore(mins) {
+            selectedPauseBeforeVal = mins;
+            document.querySelectorAll('#pauseBeforePicker .picker-btn').forEach(b => {
+                b.classList.toggle('active', selectedPauseBeforeVal !== null && Number(b.dataset.mins) === Number(selectedPauseBeforeVal));
+            });
+        }
+
+        function setPauseAfter(mins) {
+            selectedPauseAfterVal = mins;
+            document.querySelectorAll('#pauseAfterPicker .picker-btn').forEach(b => {
+                b.classList.toggle('active', selectedPauseAfterVal !== null && Number(b.dataset.mins) === Number(selectedPauseAfterVal));
+            });
+        }
+
+        function togglePauseBefore(mins) {
+            triggerHaptic(15);
+            setPauseBefore(selectedPauseBeforeVal === mins ? null : mins);
+        }
+
+        function togglePauseAfter(mins) {
+            triggerHaptic(15);
+            setPauseAfter(selectedPauseAfterVal === mins ? null : mins);
+        }
+
+        async function saveProductsSync() {
+            await tgCloud.setItem('cb_custom_products', products);
+        }
+
+        function saveProduct() {
+            triggerHaptic(30);
+            const name = document.getElementById('pName').value.trim();
+            const activeTypeBtn = document.querySelector('#typePicker .picker-btn.active');
+            const type = activeTypeBtn ? activeTypeBtn.dataset.type : null;
+            let tods = [];
+            document.querySelectorAll('#todPicker .picker-btn.active').forEach(b => tods.push(b.dataset.tod));
+
+            if (!name) return showToast('Введите название');
+            if (!type) return showToast('Выберите тип средства');
+            if (tods.length === 0) return showToast('Выберите время суток');
+
+            const freqType = document.getElementById('pFreqType').value;
+            const openDate = document.getElementById('pOpenDate').value || getLocalTodayStr();
+            const editId = document.getElementById('editProductId').value;
+
+            const existingItem = editId ? products.find(p => p.id === Number(editId)) : null;
+            const addedDate = existingItem ? (existingItem.addedDate || existingItem.openDate || getLocalTodayStr()) : getLocalTodayStr();
+            const inRoutineStatus = existingItem ? (existingItem.inRoutine !== false) : true;
+
+            let days = [];
+            if (freqType === 'custom') {
+                document.querySelectorAll('.day-chip.active').forEach(chip => {
+                    days.push(parseInt(chip.dataset.day, 10));
+                });
+            }
+
+            const productData = {
+                id: editId ? Number(editId) : Date.now(),
+                name, type, tods, freqType, days,
+                pauseBefore: selectedPauseBeforeVal,
+                pauseAfter: selectedPauseAfterVal,
+                openDate,
+                addedDate,
+                paoMonths: selectedPAOMonths,
+                inRoutine: inRoutineStatus
+            };
+
+            if (editId) {
+                const idx = products.findIndex(p => p.id === Number(editId));
+                if (idx !== -1) products[idx] = productData;
+            } else {
+                products.push(productData);
+            }
+
+            saveProductsSync();
+            renderManageList();
+            hideForm();
+            renderRoutine();
+        }
+
+        function openProductActionModal(id) {
+            triggerHaptic(20);
+            activeSelectedProductId = Number(id);
+            const item = products.find(p => p.id === activeSelectedProductId);
+            if (!item) return;
+
+            document.getElementById('actionModalProductName').innerText = item.name;
+
+            const toggleBtn = document.getElementById('btnActionTogglePause');
+            const isIn = (item.inRoutine !== false);
+
+            const pauseSvg = `<svg class="svg-icon" viewBox="0 0 24 24"><rect x="6" y="4" width="4" height="16"></rect><rect x="14" y="4" width="4" height="16"></rect></svg>`;
+            const playSvg = `<svg class="svg-icon" viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>`;
+
+            if (isIn) {
+                toggleBtn.innerHTML = `${pauseSvg} Поставить на паузу`;
+            } else {
+                toggleBtn.innerHTML = `${playSvg} Включить в уход`;
+            }
+
+            openModalElement(document.getElementById('productActionModal'));
+        }
+
+        function closeProductActionModal() {
+            closeModalElement(document.getElementById('productActionModal'));
+            activeSelectedProductId = null;
+        }
+
+        function toggleProductRoutineAction() {
+            if (!activeSelectedProductId) return;
+            const item = products.find(p => p.id === activeSelectedProductId);
+            if (item) {
+                const newState = !(item.inRoutine !== false);
+                item.inRoutine = newState;
+                saveProductsSync();
+                renderManageList();
+                renderRoutine();
+                closeProductActionModal();
+                showToast(newState ? 'Средство включено в уход' : 'Средство поставлено на паузу');
+            }
+        }
+
+        function editProductAction() {
+            if (!activeSelectedProductId) return;
+            const targetId = activeSelectedProductId;
+            closeProductActionModal();
+            editProduct(null, targetId);
+        }
+
+        function deleteProductAction() {
+            if (!activeSelectedProductId) return;
+            const targetId = activeSelectedProductId;
+            closeProductActionModal();
+            deleteProduct(null, targetId);
+        }
+
+        function editProduct(e, id) {
+            if (e) { e.preventDefault(); e.stopPropagation(); }
+            showForm();
+
+            const nameInput = document.getElementById('pName');
+            if (nameInput) nameInput.focus();
+
+            triggerHaptic(20);
+            closeAutocomplete();
+            const item = products.find(p => p.id === Number(id));
+            if (!item) return;
+
+            openDetailsAccordion();
+
+            document.getElementById('editProductId').value = item.id;
+            nameInput.value = item.name;
+
+            document.querySelectorAll('#typePicker .picker-btn').forEach(b => {
+                b.classList.toggle('active', b.dataset.type === item.type);
+            });
+
+            const itemTods = item.tods || [];
+            document.querySelectorAll('#todPicker .picker-btn').forEach(b => {
+                b.classList.toggle('active', itemTods.includes(b.dataset.tod));
+            });
+
+            const freq = item.freqType || 'daily';
+            document.getElementById('pFreqType').value = freq;
+            document.querySelectorAll('#freqPicker .picker-btn').forEach(b => {
+                b.classList.toggle('active', b.dataset.freq === freq);
+            });
+            document.getElementById('daysGroup').style.display = (freq === 'custom') ? 'block' : 'none';
+
+            setPauseBefore(item.pauseBefore !== null && item.pauseBefore !== undefined ? item.pauseBefore : null);
+            setPauseAfter(item.pauseAfter !== null && item.pauseAfter !== undefined ? item.pauseAfter : null);
+
+            document.getElementById('pOpenDate').value = item.openDate || getLocalTodayStr();
+            updateOpenDateDisplay();
+
+            if (item.paoMonths) applyPAO(item.paoMonths);
+            else applyPAO('12');
+
+            document.querySelectorAll('.day-chip').forEach(chip => {
+                const day = parseInt(chip.dataset.day, 10);
+                chip.classList.toggle('active', Array.isArray(item.days) && item.days.includes(day));
+            });
+        }
+
+        function deleteProduct(e, id) {
+            if (e) { e.preventDefault(); e.stopPropagation(); }
+            confirmAction('Удалить это средство из вашей коллекции?', () => {
+                triggerHaptic(30);
+                closeAutocomplete();
+                products = products.filter(p => p.id !== Number(id));
+                saveProductsSync();
+                renderManageList();
+                renderRoutine();
+                showToast('Средство удалено');
+            });
+        }
+
+        function openModalElement(modalEl) {
+            modalEl.style.display = 'flex';
+            document.body.classList.add('modal-open');
+            requestAnimationFrame(() => modalEl.classList.add('active-modal'));
+        }
+
+        function closeModalElement(modalEl, onClosed) {
+            triggerHaptic(15);
+            closeAutocomplete();
+            modalEl.classList.remove('active-modal');
+            setTimeout(() => {
+                modalEl.style.display = 'none';
+                document.body.classList.remove('modal-open');
+                if (onClosed) onClosed();
+            }, 300);
+        }
+
+        function showForm() {
+            document.getElementById('manageFilterSwitch').style.display = 'none';
+            document.getElementById('manageList').style.display = 'none';
+            document.getElementById('btnAddToggle').style.display = 'none';
+            document.getElementById('productFormContainer').classList.add('open');
+            document.getElementById('pinnedModalFooter').style.display = 'none';
+
+            resetForm();
+            closeDetailsAccordion();
+
+            const nameInput = document.getElementById('pName');
+            if (nameInput) nameInput.focus();
+
+            triggerHaptic(20);
+            closeAutocomplete();
+            stopBarcodeScanner();
+        }
+
+        function hideForm() {
+            triggerHaptic(15);
+            closeAutocomplete();
+            document.getElementById('productFormContainer').classList.remove('open');
+            
+            if (isSuperCollectionEnabled) {
+                document.getElementById('manageFilterSwitch').style.display = 'flex';
+            } else {
+                document.getElementById('manageFilterSwitch').style.display = 'none';
+            }
+
+            document.getElementById('manageList').style.display = 'flex';
+            document.getElementById('btnAddToggle').style.display = 'block';
+            document.getElementById('pinnedModalFooter').style.display = 'block';
+            resetForm();
+            closeDetailsAccordion();
+        }
+
+        function resetForm() {
+            closeAutocomplete();
+            selectedPauseBeforeVal = null;
+            selectedPauseAfterVal = null;
+            document.getElementById('editProductId').value = '';
+            document.getElementById('pName').value = '';
+            document.querySelectorAll('#typePicker .picker-btn').forEach(b => b.classList.remove('active'));
+            document.querySelectorAll('#todPicker .picker-btn').forEach(b => b.classList.add('active'));
+            document.querySelectorAll('#pauseBeforePicker .picker-btn, #pauseAfterPicker .picker-btn').forEach(c => c.classList.remove('active'));
+            document.getElementById('pFreqType').value = 'daily';
+            document.getElementById('daysGroup').style.display = 'none';
+
+            const defaultDays = [1, 4];
+            document.querySelectorAll('.day-chip').forEach(chip => chip.classList.toggle('active', defaultDays.includes(parseInt(chip.dataset.day, 10))));
+
+            document.getElementById('pOpenDate').value = getLocalTodayStr();
+            updateOpenDateDisplay();
+            applyPAO('12');
+            document.getElementById('smartPresetBanner').style.display = 'none';
+        }
+
+        function renderManageList() {
+            const filterSwitch = document.getElementById('manageFilterSwitch');
+            if (isSuperCollectionEnabled) {
+                filterSwitch.style.display = 'flex';
+            } else {
+                filterSwitch.style.display = 'none';
+                currentManageTab = 'inRoutine';
+            }
+
+            const inRoutineCount = products.filter(p => p.inRoutine !== false).length;
+            const onPauseCount = products.filter(p => p.inRoutine === false).length;
+
+            const cntInEl = document.getElementById('cntInRoutine');
+            const cntPauseEl = document.getElementById('cntOnPause');
+            if (cntInEl) cntInEl.innerText = inRoutineCount;
+            if (cntPauseEl) cntPauseEl.innerText = onPauseCount;
+
+            const container = document.getElementById('manageList');
+            const htmlBuffer = [];
+            const chevronSvg = `<svg class="svg-icon" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg>`;
+            const rightChevronSvg = `<svg class="svg-icon" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>`;
+
+            const isPauseTab = (currentManageTab === 'onPause');
+
+            CATEGORIES.forEach((catName, catIndex) => {
+                const isOpen = openCategoryIndexes.has(catIndex);
+                const catProducts = products.filter(p => {
+                    const isIn = (p.inRoutine !== false);
+                    return isPauseTab ? !isIn : isIn;
+                }).filter(p => p.type === catName);
+
+                let catItemsHtml = catProducts.map(p => `
+                    <div class="manage-item" id="manage-item-${p.id}" onclick="openProductActionModal(${p.id})">
+                        <div class="manage-info">
+                            ${calcExpiryDots(p.openDate, p.paoMonths)}
+                            <span><b>${escapeHtml(p.name)}</b></span>
+                        </div>
+                        <div class="manage-chevron">${rightChevronSvg}</div>
+                    </div>
+                `).join('');
+
+                htmlBuffer.push(`
+                    <div class="category-group-block">
+                        <button type="button" class="category-header-btn ${isOpen ? 'open' : ''}" id="cat-header-${catIndex}" onclick="toggleCategoryAccordion(${catIndex})">
+                            <span class="category-title-text">${escapeHtml(catName)} <span class="category-count-badge">(${catProducts.length})</span></span>
+                            <span class="category-chevron">${chevronSvg}</span>
+                        </button>
+                        <div class="category-items-container ${isOpen ? 'open' : ''}" id="cat-container-${catIndex}">
+                            <div class="category-items-inner">
+                                ${catItemsHtml || '<div style="font-size: 13px; color: var(--text-secondary); padding: 6px 10px;">Нет средств</div>'}
+                            </div>
+                        </div>
+                    </div>
+                `);
+            });
+
+            container.innerHTML = htmlBuffer.join('');
+        }
+
+        function toggleCategoryAccordion(catIndex) {
+            triggerHaptic(15);
+            const headerBtn = document.getElementById(`cat-header-${catIndex}`);
+            const container = document.getElementById(`cat-container-${catIndex}`);
+            if (!container || !headerBtn) return;
+
+            const isOpen = container.classList.contains('open');
+            if (isOpen) {
+                container.classList.remove('open');
+                headerBtn.classList.remove('open');
+                openCategoryIndexes.delete(catIndex);
+            } else {
+                container.classList.add('open');
+                headerBtn.classList.add('open');
+                openCategoryIndexes.add(catIndex);
+            }
+        }
+
+        function getBackupData() {
+            return {
+                version: APP_VERSION,
+                timestamp: Date.now(),
+                installDate: installDateStr,
+                products: products,
+                superCollection: isSuperCollectionEnabled,
+                theme: safeStorage.getItem('cb_theme') || 'sunlit',
+                fontSize: safeStorage.getItem('cb_font_size') || 'normal'
+            };
+        }
+
+        function applyImportData(data) {
+            if (!data || typeof data !== 'object' || !Array.isArray(data.products)) {
+                showToast('Ошибка: неверный формат архива');
+                return false;
+            }
+            try {
+                if (data.installDate) {
+                    installDateStr = data.installDate;
+                    safeStorage.setItem('cb_install_date', installDateStr);
+                    tgCloud.setItem('cb_install_date', installDateStr);
+                }
+
+                if (typeof data.superCollection === 'boolean') {
+                    isSuperCollectionEnabled = data.superCollection;
+                    safeStorage.setItem('cb_super_collection', String(isSuperCollectionEnabled));
+                    tgCloud.setItem('cb_super_collection', String(isSuperCollectionEnabled));
+                    document.getElementById('toggleSuperCollection').checked = isSuperCollectionEnabled;
+                    updateProBadgeUI();
+                }
+
+                products = data.products.map(p => ({
+                    id: Number(p.id) || Date.now(),
+                    name: String(p.name || ''),
+                    type: String(p.type || 'Очищение'),
+                    tods: Array.isArray(p.tods) ? p.tods : ['morning'],
+                    freqType: String(p.freqType || 'daily'),
+                    days: Array.isArray(p.days) ? p.days : [],
+                    pauseBefore: p.pauseBefore !== null && p.pauseBefore !== undefined ? Number(p.pauseBefore) : null,
+                    pauseAfter: p.pauseAfter !== null && p.pauseAfter !== undefined ? Number(p.pauseAfter) : null,
+                    openDate: String(p.openDate || getLocalTodayStr()),
+                    addedDate: String(p.addedDate || p.openDate || getLocalTodayStr()),
+                    paoMonths: p.paoMonths ? String(p.paoMonths) : '12',
+                    inRoutine: p.inRoutine !== false
+                }));
+
+                saveProductsSync();
+
+                if (data.theme) {
+                    const validTheme = OLD_THEMES.includes(data.theme) ? 'sunlit' : data.theme;
+                    setTheme(validTheme);
+                }
+
+                if (data.fontSize) {
+                    setFontSize(data.fontSize);
+                }
+
+                renderManageList();
+                switchTOD(currentTOD);
+                showToast('Данные успешно загружены!');
+                return true;
+            } catch (err) {
+                showToast('Ошибка применения архива');
+                return false;
+            }
+        }
+
+        async function exportJsonFile() {
+            triggerHaptic(20);
+            const data = getBackupData();
+            const jsonString = JSON.stringify(data, null, 2);
+            const filename = `mylumy_backup_${getLocalTodayStr()}.json`;
+            const file = new File([jsonString], filename, { type: 'application/json' });
+
+            if (navigator.canShare && navigator.canShare({ files: [file] })) {
+                try {
+                    await navigator.share({ title: 'Архив MyLumy', text: 'Резервная копия данных MyLumy', files: [file] });
+                    showToast('Архив экспортирован!');
+                    return;
+                } catch (err) { if (err.name === 'AbortError') return; }
+            }
+
+            try {
+                const blob = new Blob([jsonString], { type: 'application/json' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = filename;
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                setTimeout(() => URL.revokeObjectURL(url), 1000);
+                showToast('Файл скачан!');
+            } catch (e) { showToast('Ошибка при скачивании файла'); }
+        }
+
+        function triggerImportJson() {
+            triggerHaptic(20);
+            document.getElementById('jsonFileInput').click();
+        }
+
+        function importJsonFile(file) {
+            triggerHaptic(20);
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                try {
+                    const data = JSON.parse(e.target.result);
+                    confirmAction('Перезаписать текущую коллекцию средств новыми данными из архива?', () => applyImportData(data));
+                } catch (err) { showToast('Ошибка чтения файла.'); }
+            };
+            reader.readAsText(file);
+        }
+
+        function copyShareLink() {
+            triggerHaptic(20);
+            try {
+                const data = getBackupData();
+                const encoded = toBase64(JSON.stringify(data));
+                const fullUrl = `${window.location.origin}${window.location.pathname}#import=${encoded}`;
+                if (navigator.clipboard && navigator.clipboard.writeText) {
+                    navigator.clipboard.writeText(fullUrl).then(() => showToast('Ссылка скопирована!'));
+                }
+            } catch(e) { showToast('Ошибка создания ссылки'); }
+        }
+
+        function forceAppUpdate() {
+            triggerHaptic(25);
+            showToast('Поиск обновлений...');
+            setTimeout(() => {
+                window.location.href = `${window.location.origin}${window.location.pathname}?v_force=${Date.now()}${window.location.hash}`;
+            }, 300);
+        }
+
+        function showToast(msg) {
+            const toast = document.getElementById('toastNotification');
+            toast.innerText = msg;
+            toast.classList.add('visible');
+            setTimeout(() => toast.classList.remove('visible'), 3000);
+        }
+
+        async function setTheme(theme, isInitial = false) {
+            if (!isInitial) {
+                triggerHaptic(15);
+                document.body.classList.add('theme-animated');
+            }
+
+            const validTheme = OLD_THEMES.includes(theme) ? 'sunlit' : theme;
+            document.documentElement.setAttribute('data-theme', validTheme);
+            document.body.setAttribute('data-theme', validTheme);
+            safeStorage.setItem('cb_theme', validTheme);
+
+            applyTelegramThemeColors(validTheme);
+
+            document.querySelectorAll('#themeRow [data-theme]').forEach(b => {
+                b.classList.toggle('active', b.dataset.theme === validTheme);
+            });
+            await tgCloud.setItem('cb_theme', validTheme);
+        }
+
+        function setFontSize(size) {
+            triggerHaptic(15);
+            const fontVal = size === 'large' ? 'large' : 'normal';
+            document.documentElement.setAttribute('data-font-size', fontVal);
+            safeStorage.setItem('cb_font_size', fontVal);
+
+            document.querySelectorAll('#fontSizePicker .picker-btn').forEach(b => {
+                b.classList.toggle('active', b.dataset.size === fontVal);
+            });
+        }
+
+        async function loadAppDataFromCloud() {
+            if (window.Telegram?.WebApp) {
+                try {
+                    window.Telegram.WebApp.ready();
+                    window.Telegram.WebApp.expand();
+                } catch (e) {}
+            }
+
+            const cloudSuperVal = await tgCloud.getItem('cb_super_collection');
+            if (cloudSuperVal !== null && cloudSuperVal !== undefined) {
+                isSuperCollectionEnabled = (cloudSuperVal === 'true');
+                safeStorage.setItem('cb_super_collection', String(isSuperCollectionEnabled));
+            }
+            const toggleSuperEl = document.getElementById('toggleSuperCollection');
+            if (toggleSuperEl) toggleSuperEl.checked = isSuperCollectionEnabled;
+            updateProBadgeUI();
+
+            const cloudInstallDate = await tgCloud.getItem('cb_install_date');
+            if (cloudInstallDate) {
+                installDateStr = cloudInstallDate;
+                safeStorage.setItem('cb_install_date', installDateStr);
+            }
+
+            const cloudProductsJson = await tgCloud.getItem('cb_custom_products');
+            if (cloudProductsJson) {
+                try {
+                    const parsed = typeof cloudProductsJson === 'string' ? JSON.parse(cloudProductsJson) : cloudProductsJson;
+                    if (Array.isArray(parsed) && parsed.length > 0) {
+                        products = parsed;
+                        renderManageList();
+                        renderRoutine();
+                    }
+                } catch (e) {}
+            }
+        }
+
+        function setupAllEventListeners() {
+            document.getElementById('btnActionTogglePause').addEventListener('click', toggleProductRoutineAction);
+            document.getElementById('btnActionEdit').addEventListener('click', editProductAction);
+            document.getElementById('btnActionDelete').addEventListener('click', deleteProductAction);
+            document.getElementById('btnActionCancel').addEventListener('click', closeProductActionModal);
+
+            document.getElementById('btnAgreeAndStart').addEventListener('click', () => {
+                triggerHaptic(30);
+                safeStorage.setItem('cb_terms_agreed', 'true');
+                closeModalElement(document.getElementById('welcomeModal'));
+            });
+
+            document.getElementById('currentDateChip').addEventListener('click', () => openCustomCalendar('routine'));
+            document.getElementById('btnCloseCal').addEventListener('click', closeCustomCalendar);
+            document.getElementById('calPrevMonth').addEventListener('click', () => {
+                triggerHaptic(10);
+                calCurrentViewDate.setMonth(calCurrentViewDate.getMonth() - 1);
+                renderCustomCalendar();
+            });
+            document.getElementById('calNextMonth').addEventListener('click', () => {
+                triggerHaptic(10);
+                calCurrentViewDate.setMonth(calCurrentViewDate.getMonth() + 1);
+                renderCustomCalendar();
+            });
+
+            document.getElementById('pName').addEventListener('input', (e) => handleNameInput(e.target.value, false));
+            document.getElementById('btnScanBarcode').addEventListener('click', startBarcodeScanner);
+            document.getElementById('btnCancelScanner').addEventListener('click', stopBarcodeScanner);
+
+            document.getElementById('btnToggleDetailsAccordion').addEventListener('click', toggleDetailsAccordion);
+
+            document.getElementById('paoPicker').addEventListener('click', (e) => {
+                const chip = e.target.closest('.pao-chip');
+                if (chip) applyPAO(chip.dataset.months);
+            });
+
+            document.getElementById('btnToggleOpenDate').addEventListener('click', (e) => {
+                e.preventDefault();
+                openCustomCalendar('pao');
+            });
+
+            document.getElementById('typePicker').addEventListener('click', (e) => {
+                const btn = e.target.closest('.picker-btn');
+                if (btn) {
+                    triggerHaptic(15);
+                    document.querySelectorAll('#typePicker .picker-btn').forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    if (btn.dataset.type === 'Уход за глазами') applyPAO('6');
+                }
+            });
+
+            document.getElementById('todPicker').addEventListener('click', (e) => {
+                const btn = e.target.closest('.picker-btn');
+                if (btn) {
+                    triggerHaptic(15);
+                    btn.classList.toggle('active');
+                }
+            });
+
+            document.getElementById('freqPicker').addEventListener('click', (e) => {
+                const btn = e.target.closest('.picker-btn');
+                if (btn) {
+                    triggerHaptic(15);
+                    const freq = btn.dataset.freq;
+                    document.querySelectorAll('#freqPicker .picker-btn').forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    document.getElementById('pFreqType').value = freq;
+                    document.getElementById('daysGroup').style.display = (freq === 'custom') ? 'block' : 'none';
+                }
+            });
+
+            document.getElementById('daysPicker').addEventListener('click', (e) => {
+                const chip = e.target.closest('.day-chip');
+                if (chip) {
+                    triggerHaptic(15);
+                    chip.classList.toggle('active');
+                }
+            });
+
+            document.getElementById('pauseBeforePicker').addEventListener('click', (e) => {
+                const btn = e.target.closest('.picker-btn');
+                if (btn) togglePauseBefore(Number(btn.dataset.mins));
+            });
+
+            document.getElementById('pauseAfterPicker').addEventListener('click', (e) => {
+                const btn = e.target.closest('.picker-btn');
+                if (btn) togglePauseAfter(Number(btn.dataset.mins));
+            });
+
+            document.getElementById('btnOpenSettings').addEventListener('click', () => {
+                triggerHaptic(20);
+                renderManageList();
+                openModalElement(document.getElementById('settingsModal'));
+            });
+            document.getElementById('btnCloseSettings').addEventListener('click', () => closeModalElement(document.getElementById('settingsModal')));
+
+            document.getElementById('btnOpenAppSettings').addEventListener('click', () => {
+                triggerHaptic(20);
+                openModalElement(document.getElementById('appSettingsModal'));
+            });
+            document.getElementById('btnCloseAppSettings').addEventListener('click', () => closeModalElement(document.getElementById('appSettingsModal')));
+
+            document.getElementById('tabInRoutine').addEventListener('click', () => {
+                triggerHaptic(15);
+                currentManageTab = 'inRoutine';
+                document.getElementById('tabInRoutine').classList.add('active');
+                document.getElementById('tabOnPause').classList.remove('active');
+                renderManageList();
+            });
+
+            document.getElementById('tabOnPause').addEventListener('click', () => {
+                triggerHaptic(15);
+                currentManageTab = 'onPause';
+                document.getElementById('tabOnPause').classList.add('active');
+                document.getElementById('tabInRoutine').classList.remove('active');
+                renderManageList();
+            });
+
+            document.getElementById('btnAddToggle').addEventListener('click', showForm);
+            document.getElementById('btnCancelProduct').addEventListener('click', hideForm);
+            document.getElementById('btnSaveProduct').addEventListener('click', saveProduct);
+
+            document.getElementById('btnForceUpdate').addEventListener('click', forceAppUpdate);
+            document.getElementById('btnCopyShareLink').addEventListener('click', copyShareLink);
+            document.getElementById('btnExportJson').addEventListener('click', exportJsonFile);
+            document.getElementById('btnImportJson').addEventListener('click', triggerImportJson);
+            document.getElementById('jsonFileInput').addEventListener('change', (e) => {
+                if (e.target.files && e.target.files[0]) importJsonFile(e.target.files[0]);
+            });
+
+            document.getElementById('themeRow').addEventListener('click', (e) => {
+                const b = e.target.closest('[data-theme]');
+                if (b) setTheme(b.dataset.theme);
+            });
+
+            document.getElementById('fontSizePicker').addEventListener('click', (e) => {
+                const btn = e.target.closest('.picker-btn');
+                if (btn) setFontSize(btn.dataset.size);
+            });
+
+            document.getElementById('btnMorning').addEventListener('click', () => switchTOD('morning'));
+            document.getElementById('btnEvening').addEventListener('click', () => switchTOD('evening'));
+
+            document.querySelectorAll('.modal-overlay').forEach(overlay => {
+                overlay.addEventListener('click', (e) => {
+                    if (e.target === overlay) {
+                        closeAutocomplete();
+                        closeModalElement(overlay);
+                    }
+                });
+            });
+
+            document.addEventListener('click', (e) => {
+                if (!e.target.closest('.form-group')) closeAutocomplete();
+            });
+        }
+
+        async function initApp() {
+            await loadAppDataFromCloud();
+
+            /* Автоматический импорт при переходе по ссылке */
+            if (window.location.hash && window.location.hash.startsWith('#import=')) {
+                try {
+                    const encoded = window.location.hash.replace('#import=', '');
+                    const jsonStr = fromBase64(encoded);
+                    const data = JSON.parse(jsonStr);
+                    confirmAction('Загрузить коллекцию средств из полученной ссылки?', () => {
+                        applyImportData(data);
+                        history.replaceState(null, "", window.location.pathname);
+                    });
+                } catch (e) {
+                    showToast('Ошибка чтения ссылки переноса');
+                }
+            }
+
+            const toggleSuperEl = document.getElementById('toggleSuperCollection');
+            if (toggleSuperEl) {
+                toggleSuperEl.checked = isSuperCollectionEnabled;
+                updateProBadgeUI();
+
+                toggleSuperEl.addEventListener('change', (e) => {
+                    triggerHaptic(20);
+                    isSuperCollectionEnabled = e.target.checked;
+                    safeStorage.setItem('cb_super_collection', String(isSuperCollectionEnabled));
+                    tgCloud.setItem('cb_super_collection', String(isSuperCollectionEnabled));
+                    updateProBadgeUI();
+                    renderManageList();
+                    showToast(isSuperCollectionEnabled ? 'Режим PRO включен' : 'Режим PRO отключен');
+                });
+            }
+
+            /* Инициализация шрифта */
+            const savedFontSize = safeStorage.getItem('cb_font_size') || 'normal';
+            setFontSize(savedFontSize);
+
+            const hasAgreedToTerms = safeStorage.getItem('cb_terms_agreed');
+            if (!hasAgreedToTerms) {
+                const welcomeModal = document.getElementById('welcomeModal');
+                if (welcomeModal) {
+                    welcomeModal.addEventListener('click', (e) => e.stopPropagation()); 
+                    openModalElement(welcomeModal);
+                }
+            }
+
+            setupAllEventListeners();
+            switchTOD(currentTOD);
+        }
+
+        /* Мгновенная инициализация без зависания при пропущенном DOMContentLoaded */
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initApp);
+        } else {
+            initApp();
+        }
+    </script>
+</body>
+</html>
